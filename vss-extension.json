@@ -1,0 +1,36 @@
+{
+	"manifestVersion": 1,
+	"id": "sarif-viewer-build-tab",
+	"publisher": "sariftools",
+	"version": "0.1.11",
+	"name": "Sarif Viewer Build Tab",
+	"description": "View Sarif artifacts directly from the build page.",
+	"public": false,
+	"categories": ["Azure Repos"],
+	"targets": [
+		{
+			"id": "Microsoft.VisualStudio.Services"
+		}
+	],
+	"contributions": [
+		{
+			"id": "my-hub",
+			"type":     "ms.vss-build-web.build-results-tab",
+			"targets": ["ms.vss-build-web.build-results-view"],
+			"properties": {
+				"name": "Sarif",
+				"uri": "index.html"
+			}
+		}
+	],
+	"files": [
+		{ "addressable": true, "path": "index.html" },
+		{ "addressable": true, "path": "bundle.js" },
+		{ "addressable": true, "path": "zip.js" },
+		{ "addressable": true, "path": "z-worker.js" },
+		{ "addressable": true, "path": "deflate.js" },
+		{ "addressable": true, "path": "inflate.js" },
+		{ "addressable": true, "path": "node_modules/vss-web-extension-sdk/lib", "packagePath": "lib" }
+	],
+	"scopes": ["vso.build_execute"]
+}

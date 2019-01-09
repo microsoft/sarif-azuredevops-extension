@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"outDir": "./dist/",
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"target": "ES6",
+		"module" : "CommonJS",
+		"moduleResolution": "Node",
+		"jsx": "react",
+		"downlevelIteration": true,
+		"experimentalDecorators": true
+	}
+}
