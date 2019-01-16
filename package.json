@@ -1,5 +1,5 @@
 {
-  "name": "adosv",
+  "name": "sarif-viewer-build-tab",
   "version": "1.0.0",
   "description": "Sarif Viewer DevOps Build Extension",
   "main": "index.js",
