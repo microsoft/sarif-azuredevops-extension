@@ -6,16 +6,14 @@
 	"name": "Sarif Viewer Build Tab",
 	"description": "View Sarif artifacts directly from the build page.",
 	"public": false,
-	"categories": ["Azure Repos"],
+	"categories": ["Azure Pipelines"],
 	"targets": [
-		{
-			"id": "Microsoft.VisualStudio.Services"
-		}
+		{ "id": "Microsoft.VisualStudio.Services" }
 	],
 	"contributions": [
 		{
-			"id": "my-hub",
-			"type":     "ms.vss-build-web.build-results-tab",
+			"id": "sariftools.sarif-viewer-build-tab",
+			"type": "ms.vss-build-web.build-results-tab",
 			"targets": ["ms.vss-build-web.build-results-view"],
 			"properties": {
 				"name": "Sarif",
