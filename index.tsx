@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import 'script-loader!vss-web-extension-sdk/lib/VSS.SDK.min.js'
 import {ResultsViewer, Dropdown} from 'sarif-web-component/Index.tsx'
 
 declare var VSS: any
