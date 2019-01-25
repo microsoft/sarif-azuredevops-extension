@@ -6,7 +6,7 @@ import {ResultsViewer, Dropdown} from 'sarif-web-component/Index.tsx'
 declare var VSS: any
 class Tab extends React.Component<any, any> {
 	static decoder = new TextDecoder("utf-8")
-	state = { loading: true, files: [], fileIndex: 0 }
+	state = { files: undefined, fileIndex: 0 }
 	constructor(props) {
 		super(props)
 		VSS.init({ explicitNotifyLoaded: true, usePlatformScripts: true })
@@ -25,19 +25,19 @@ class Tab extends React.Component<any, any> {
 							)()
 						}
 					})
-				this.setState({ loading: false, files })
+				this.setState({ files })
 			}
 			VSS.register(VSS.getContribution().id, { onLoaded }) ;onLoaded({ id: 1 })
 			VSS.notifyLoadSucceeded()
 		})
 	}
 	render() {
-		const { loading, files, fileIndex} = this.state
+		const {files, fileIndex} = this.state
 		const dd = <Dropdown className="resultsDropdown"
 			options={files} selectedKey={fileIndex}
 			onChange={(ev, option, i) => this.setState({ fileIndex: i })} />
-		return loading || files.length
-			? <ResultsViewer sarif={loading ? undefined : files[fileIndex].sarif()} prefix={dd} />
+		return !files || files.length
+			? <ResultsViewer sarif={files && files[fileIndex].sarif()} prefix={dd} />
 			: <div className="full">No SARIF attachments found.</div>
 	}
 }
