@@ -24,10 +24,6 @@
 	"files": [
 		{ "addressable": true, "path": "index.html" },
 		{ "addressable": true, "path": "bundle.js" },
-		{ "addressable": true, "path": "zip.js" },
-		{ "addressable": true, "path": "z-worker.js" },
-		{ "addressable": true, "path": "deflate.js" },
-		{ "addressable": true, "path": "inflate.js" },
 		{ "addressable": true, "path": "node_modules/vss-web-extension-sdk/lib", "packagePath": "lib" }
 	],
 	"scopes": ["vso.build_execute"]

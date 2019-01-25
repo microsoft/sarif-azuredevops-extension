@@ -2,7 +2,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {ResultsViewer, Dropdown} from 'sarif-web-component/Index.tsx'
 
-declare var zip: any
 declare var VSS: any
 
 VSS.init()
