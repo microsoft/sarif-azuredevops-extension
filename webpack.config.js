@@ -5,7 +5,7 @@ module.exports = {
     entry: "./index.tsx",
     output: { path: __dirname, filename: "bundle.js" },
     resolve: {
-        extensions: [".js", ".jsx", "ts", "tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
         alias: {
             'react': path.resolve('node_modules/react'),
             'react-dom': path.resolve('node_modules/react-dom'),
