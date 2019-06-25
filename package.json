@@ -1,33 +1,33 @@
 {
-  "name": "sarif-viewer-wit-tab",
-  "version": "1.0.0",
-  "description": "Sarif Viewer DevOps Work Item Extension",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development",
-    "p": "webpack --mode production",
-    "d": "webpack --mode development"
-  },
-  "dependencies": {
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "sarif-web-component": "file:../sarif-web-component",
-    "vss-web-extension-sdk": "^5.141.0"
-  },
-  "devDependencies": {
-    "@types/react": "^16.7.13",
-    "@types/react-dom": "^16.0.11",
-    "autobind-decorator": "^2.4.0",
-    "css-loader": "^1.0.1",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "script-loader": "^0.7.2",
-    "style-loader": "^0.21.0",
-    "ts-loader": "^4.5.0",
-    "typescript": "^3.2.1",
-    "webpack": "^4.26.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
-  }
+	"name": "sarif-viewer-wit-tab",
+	"version": "1.0.0",
+	"description": "Sarif Viewer DevOps Work Item Extension",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "webpack-dev-server --mode development",
+		"p": "webpack --mode production",
+		"d": "webpack --mode development"
+	},
+	"dependencies": {
+		"react": "^16.6.3",
+		"react-dom": "^16.6.3",
+		"sarif-web-component": "file:../sarif-web-component",
+		"vss-web-extension-sdk": "^5.141.0"
+	},
+	"devDependencies": {
+		"@types/react": "^16.7.13",
+		"@types/react-dom": "^16.0.11",
+		"autobind-decorator": "^2.4.0",
+		"css-loader": "^1.0.1",
+		"node-sass": "^4.11.0",
+		"sass-loader": "^7.1.0",
+		"script-loader": "^0.7.2",
+		"style-loader": "^0.21.0",
+		"ts-loader": "^4.5.0",
+		"typescript": "^3.2.1",
+		"webpack": "^4.26.1",
+		"webpack-cli": "^3.1.2",
+		"webpack-dev-server": "^3.1.10"
+	}
 }
