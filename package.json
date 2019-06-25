@@ -12,7 +12,7 @@
 	"dependencies": {
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
-		"sarif-web-component": "file:../sarif-web-component",
+		"sarif-web-component": "file:../sarif-web-component-adoui",
 		"vss-web-extension-sdk": "^5.141.0"
 	},
 	"devDependencies": {
