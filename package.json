@@ -10,6 +10,8 @@
 		"d": "webpack --mode development"
 	},
 	"dependencies": {
+		"mobx": "^5.10.1",
+		"mobx-react": "^6.1.1",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
 		"sarif-web-component": "file:../sarif-web-component-adoui",
@@ -26,6 +28,7 @@
 		"style-loader": "^0.23.1",
 		"ts-loader": "^6.0.1",
 		"typescript": "^3.4.5",
+		"url-loader": "^2.0.0",
 		"webpack": "^4.32.2",
 		"webpack-cli": "^3.3.2",
 		"webpack-dev-server": "^3.4.1"

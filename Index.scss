@@ -1,0 +1,14 @@
+html, body, #app { height: 100%; }
+#app {
+	flex: 1 1 auto; /* azure-devops-ui injects body display flex. */
+	background: #f8f8f8 /* Overrides VSS background set on body */
+}
+
+.full {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	color: rgb(0, 120, 212);
+}

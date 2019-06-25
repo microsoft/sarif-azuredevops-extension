@@ -1,11 +1,11 @@
 const path = require("path")
-const webpack = require('webpack')
 
 module.exports = {
     entry: "./index.tsx",
-    output: { path: __dirname, filename: "bundle.js" },
+	output: { path: __dirname, filename: "bundle.js" },
+	mode: 'production',
     resolve: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: [".js", ".ts", ".tsx"],
         alias: {
             'react': path.resolve('node_modules/react'),
             'react-dom': path.resolve('node_modules/react-dom'),
@@ -20,9 +20,10 @@ module.exports = {
             },
             {
                 test: /\.s?css$/,
-                exclude: /node_modules/,
                 use: ["style-loader", "css-loader", "sass-loader"]
-            },
+			},
+			{ test: /\.png$/, use: 'url-loader' },
+			{ test: /\.woff$/, use: 'url-loader' },
         ]
     },
     devServer : { port: 8080, https: true }
