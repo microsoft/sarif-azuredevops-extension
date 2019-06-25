@@ -10,6 +10,7 @@ class Tab extends React.Component<any, any> {
 	constructor(props) {
 		super(props)
 		VSS.init({ explicitNotifyLoaded: true, usePlatformScripts: true })
+		// Tfs/WebPlatform/Client/TFS/WorkItemTracking/RestClient.ts
 		VSS.require(['TFS/WorkItemTracking/RestClient'], _WitRestClient => {
 			const onLoaded = async ({id}) => {
 				const witRestClient = _WitRestClient.getClient()
