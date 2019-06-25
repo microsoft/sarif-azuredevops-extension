@@ -21,8 +21,7 @@
 	],
 	"files": [
 		{ "addressable": true, "path": "index.html" },
-		{ "addressable": true, "path": "bundle.js" },
-		{ "addressable": true, "path": "node_modules/vss-web-extension-sdk/lib", "packagePath": "lib" }
+		{ "addressable": true, "path": "bundle.js" }
 	],
 	"scopes": [ "vso.work", "vso.work_write"]
 }
