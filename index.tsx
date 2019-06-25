@@ -27,7 +27,7 @@ class Tab extends React.Component<any, any> {
 					})
 				this.setState({ files })
 			}
-			VSS.register(VSS.getContribution().id, { onLoaded }) ;onLoaded({ id: 1 })
+			VSS.register(VSS.getContribution().id, { onLoaded }) // ;onLoaded({ id: 1 })
 			VSS.notifyLoadSucceeded()
 		})
 	}
