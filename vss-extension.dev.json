@@ -1,0 +1,15 @@
+{
+	"id": "sarif-viewer-wit-tab-dev",
+	"name": "Sarif Viewer Work Item Tab DEV",
+	"contributions": [
+		{
+			"id": "sariftools.sarif-viewer-wit-tab",
+			"type": "ms.vss-work-web.work-item-form-page",
+			"targets": ["ms.vss-work-web.work-item-form"],
+			"properties": {
+				"name": "Scans DEV",
+				"uri": "index.html"
+			}
+		}
+	]
+}

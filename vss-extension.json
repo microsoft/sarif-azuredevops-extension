@@ -1,24 +1,11 @@
 {
 	"manifestVersion": 1,
-	"id": "sarif-viewer-wit-tab",
 	"publisher": "sariftools",
 	"version": "0.1.11",
-	"name": "Sarif Viewer Work Item Tab",
 	"description": "View Sarif artifacts directly from a Work Item.",
 	"public": false,
 	"categories": ["Azure Boards"],
 	"targets": [{ "id": "Microsoft.VisualStudio.Services" }],
-	"contributions": [
-		{
-			"id": "sariftools.sarif-viewer-wit-tab",
-			"type": "ms.vss-work-web.work-item-form-page",
-			"targets": ["ms.vss-work-web.work-item-form"],
-			"properties": {
-				"name": "Scans",
-				"uri": "index.html"
-			}
-		}
-	],
 	"files": [
 		{ "addressable": true, "path": "index.html" },
 		{ "addressable": true, "path": "bundle.js" }
