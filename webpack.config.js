@@ -26,5 +26,5 @@ module.exports = {
 			{ test: /\.woff$/, use: 'url-loader' },
         ]
     },
-    devServer : { port: 8080, https: true }
+    devServer : { port: 8080, https: true, stats: 'none' }
 }
