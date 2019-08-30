@@ -6,6 +6,11 @@
 	"public": false,
 	"categories": ["Azure Boards"],
 	"targets": [{ "id": "Microsoft.VisualStudio.Services" }],
+	"restrictedTo": [
+		"anonymous",
+		"public",
+		"member"
+	],
 	"files": [
 		{ "addressable": true, "path": "index.html" },
 		{ "addressable": true, "path": "bundle.js" },
