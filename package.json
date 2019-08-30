@@ -9,6 +9,7 @@
 		"publish-dev": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json"
 	},
 	"dependencies": {
+		"@sinonjs/text-encoding": "^0.7.1",
 		"mobx": "^5.10.1",
 		"mobx-react": "^6.1.1",
 		"react": "^16.8.6",

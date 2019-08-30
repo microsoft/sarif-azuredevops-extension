@@ -8,7 +8,8 @@
 	"targets": [{ "id": "Microsoft.VisualStudio.Services" }],
 	"files": [
 		{ "addressable": true, "path": "index.html" },
-		{ "addressable": true, "path": "bundle.js" }
+		{ "addressable": true, "path": "bundle.js" },
+		{ "addressable": true, "path": "node_modules/@sinonjs/text-encoding/lib", "packagePath": "/" }
 	],
 	"scopes": [ "vso.work", "vso.work_write"]
 }
