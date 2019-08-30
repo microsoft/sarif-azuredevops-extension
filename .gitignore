@@ -5,3 +5,5 @@ vsix
 package-lock.json
 bundle*
 notes.txt
+
+/.vscode
