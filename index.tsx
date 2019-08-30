@@ -8,7 +8,7 @@ import {Log, Viewer} from 'sarif-web-component'
 declare var VSS: any
 
 @observer class Tab extends React.Component<any, any> {
-	static decoder = new TextDecoder("utf-8")
+	static decoder = new TextDecoder()
 	@observable.ref private logs = undefined as Log[]
 	constructor(props) {
 		super(props)
