@@ -2,10 +2,12 @@
 	"manifestVersion": 1,
 	"publisher": "sariftools",
 	"version": "0.1.11",
-	"description": "View Sarif artifacts directly from a Work Item.",
+	"description": "Adds a 'Scans' tab for viewing SARIF SAST scans in the context of each Work Item.",
 	"public": false,
 	"categories": ["Azure Boards"],
 	"targets": [{ "id": "Microsoft.VisualStudio.Services" }],
+	"icons": { "default": "vss-extension.png" },
+	"content": { "details": { "path": "vss-extension.md" } },
 	"restrictedTo": [
 		"anonymous",
 		"public",
@@ -16,5 +18,5 @@
 		{ "addressable": true, "path": "bundle.js" },
 		{ "addressable": true, "path": "node_modules/@sinonjs/text-encoding/lib", "packagePath": "/" }
 	],
-	"scopes": [ "vso.work", "vso.work_write"]
+	"scopes": ["vso.build", "vso.work", "vso.work_write"]
 }
