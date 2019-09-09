@@ -18,5 +18,5 @@
 		{ "addressable": true, "path": "bundle.js" },
 		{ "addressable": true, "path": "node_modules/@sinonjs/text-encoding/lib", "packagePath": "/" }
 	],
-	"scopes": ["vso.build", "vso.work", "vso.work_write"]
+	"scopes": ["vso.build", "vso.work"]
 }
