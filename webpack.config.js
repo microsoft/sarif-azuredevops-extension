@@ -25,6 +25,10 @@ module.exports = {
 			{ test: /\.png$/, use: 'url-loader' },
 			{ test: /\.woff$/, use: 'url-loader' },
         ]
-    },
+	},
+	performance: {
+		maxAssetSize: 1.12 * 1024 * 1024,
+		maxEntrypointSize: 1.12 * 1024 * 1024,
+	},
     devServer : { port: 8080, https: true, stats: 'none' }
 }
