@@ -30,5 +30,6 @@ module.exports = {
 		maxAssetSize: 1.12 * 1024 * 1024,
 		maxEntrypointSize: 1.12 * 1024 * 1024,
 	},
+	stats: 'minimal',
     devServer : { port: 8080, https: true, stats: 'none' }
 }
