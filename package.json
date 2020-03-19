@@ -9,12 +9,12 @@
 		"publish-dev": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json"
 	},
 	"dependencies": {
+		"@microsoft/sarif-web-component": "^0.2.0",
 		"@sinonjs/text-encoding": "^0.7.1",
 		"mobx": "^5.10.1",
 		"mobx-react": "^6.1.1",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
-		"sarif-web-component": "file:../sarif-web-component-adoui",
 		"vss-web-extension-sdk": "^5.141.0"
 	},
 	"devDependencies": {
@@ -27,7 +27,7 @@
 		"script-loader": "^0.7.2",
 		"style-loader": "^0.23.1",
 		"ts-loader": "^6.0.1",
-		"typescript": "^3.4.5",
+		"typescript": "^3.7.2",
 		"url-loader": "^2.0.0",
 		"webpack": "^4.32.2",
 		"webpack-cli": "^3.3.2",

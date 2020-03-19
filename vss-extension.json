@@ -1,7 +1,7 @@
 {
 	"manifestVersion": 1,
 	"publisher": "sariftools",
-	"version": "0.1.11",
+	"version": "0.1.40",
 	"description": "Adds a 'Scans' tab for viewing SARIF SAST scans in the context of each Work Item.",
 	"public": false,
 	"categories": ["Azure Boards"],

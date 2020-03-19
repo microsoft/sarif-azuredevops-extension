@@ -4,7 +4,7 @@ import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 
 import 'script-loader!vss-web-extension-sdk/lib/VSS.SDK.min.js'
-import {Log, Viewer} from 'sarif-web-component'
+import {Log, Viewer} from '@microsoft/sarif-web-component'
 declare var VSS: any
 
 @observer class Tab extends React.Component<any, any> {
@@ -41,7 +41,11 @@ declare var VSS: any
 	render() {
 		const {logs} = this
 		return !logs || logs.length
-			? <Viewer logs={logs} />
+			? <Viewer logs={logs} showSuppression
+				filterState={{
+					Baseline: { value: ['new', 'unchanged', 'updated'] },
+					Suppression: { value: ['unsuppressed']},
+				}} />
 			: <div className="full">No SARIF attachments found.</div>
 	}
 }
