@@ -4,8 +4,10 @@ import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 
 import 'script-loader!vss-web-extension-sdk/lib/VSS.SDK.min.js'
-import {Log, Viewer} from '@microsoft/sarif-web-component'
 declare var VSS: any
+// import {VSS} from './VSS.SDK.mock'
+
+import {Log, Viewer} from '@microsoft/sarif-web-component'
 
 @observer class Tab extends React.Component<any, any> {
 	static decoder = new TextDecoder()
