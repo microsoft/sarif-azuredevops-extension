@@ -9,7 +9,7 @@
 		"publish-dev": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json"
 	},
 	"dependencies": {
-		"@microsoft/sarif-web-component": "^0.2.0",
+		"@microsoft/sarif-web-component": "0.3.0",
 		"@sinonjs/text-encoding": "^0.7.1",
 		"mobx": "^5.10.1",
 		"mobx-react": "^6.1.1",
