@@ -38,6 +38,7 @@ import {Log, Viewer} from '@microsoft/sarif-web-component'
 			}
 			VSS.register(VSS.getContribution().id, { onLoaded }) // ;onLoaded({ id: 1 })
 			VSS.notifyLoadSucceeded() // Not working within onLoaded()
+			console.info('Version', VSS.getExtensionContext().version)
 		})
 	}
 	render() {

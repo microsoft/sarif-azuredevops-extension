@@ -22,6 +22,7 @@ const encoder = new TextEncoder()
 
 export const VSS = {
 	getContribution: () => ({ id: '' }),
+	getExtensionContext: () => ({ version: '0.0.0-mock' }),
 	init: _options => {},
 	require: (_modules, callback) => {
 		const workItem = {
