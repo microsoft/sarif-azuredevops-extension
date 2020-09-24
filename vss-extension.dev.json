@@ -1,6 +1,8 @@
 {
+	"publisher": "",
 	"id": "scans-dev",
 	"name": "SARIF SAST Scans Tab DEV",
+	"version": "0.0.0",
 	"contributions": [
 		{
 			"id": "workitem-tab",

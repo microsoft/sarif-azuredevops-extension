@@ -1,6 +1,8 @@
 {
+	"publisher": "sariftools",
 	"id": "scans",
 	"name": "SARIF SAST Scans Tab",
+	"version": "0.1.41",
 	"contributions": [
 		{
 			"id": "workitem-tab",
