@@ -1,7 +1,4 @@
 {
-	"name": "sarif-viewer-wit-tab",
-	"version": "1.0.0",
-	"description": "Sarif Viewer DevOps Work Item Extension",
 	"main": "index.js",
 	"scripts": {
 		"start": "webpack-dev-server --mode development",
