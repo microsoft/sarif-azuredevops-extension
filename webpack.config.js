@@ -1,8 +1,8 @@
 const path = require("path")
 
 module.exports = {
-	entry: "./index.tsx",
-	output: { path: __dirname, filename: "bundle.js" },
+	entry: path.join(__dirname, 'src', 'tabWorkItem.tsx'),
+	output: { path: path.join(__dirname, 'src'), filename: "tabWorkItem.js" },
 	mode: 'production',
 	resolve: {
 		extensions: [".js", ".ts", ".tsx"],

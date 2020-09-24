@@ -8,7 +8,7 @@
 			"targets": ["ms.vss-work-web.work-item-form"],
 			"properties": {
 				"name": "Scans DEV",
-				"uri": "index.html"
+				"uri": "tabWorkItem.html"
 			}
 		}
 	]

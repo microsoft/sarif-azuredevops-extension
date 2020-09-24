@@ -9,8 +9,8 @@ declare var VSS: any
 
 import {Log, Viewer} from '@microsoft/sarif-web-component'
 
-@observer class Tab extends React.Component<any, any> {
-	static decoder = new TextDecoder()
+@observer class Tab extends React.Component {
+	static decoder = new TextDecoder() // @sinonjs/text-encoding polyfills IE.
 	@observable.ref private logs = undefined as Log[]
 	constructor(props) {
 		super(props)

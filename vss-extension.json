@@ -14,8 +14,7 @@
 		"member"
 	],
 	"files": [
-		{ "addressable": true, "path": "index.html" },
-		{ "addressable": true, "path": "bundle.js" },
+		{ "addressable": true, "path": "src", "packagePath": "/" },
 		{ "addressable": true, "path": "node_modules/@sinonjs/text-encoding/lib", "packagePath": "/" }
 	],
 	"scopes": ["vso.build", "vso.work"]
