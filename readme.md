@@ -29,3 +29,25 @@ This creates a file inyour `./vsix` folder named `sariftools.scans-0.1.0.vsix` (
 Upload the `vsix` file to `https://marketplace.visualstudio.com/manage/publishers/YOUR_PUBLISHER_ID`. On that page, find the matching extension, choose `⋯`, and choose `Update`.
 
 Remember to commit any `vss-extension.json` `version` changes.
+
+### New API
+import('azure-devops-extension-sdk').init() results in "No handler found on any channel for message"
+and "Error: Cannot get registered instance for : JeffKingO.scans-dev.workitem-tab"
+
+```
+import * as SDK from 'azure-devops-extension-sdk'
+import { IWorkItemFormService, WorkItemTrackingServiceIds } from 'azure-devops-extension-api/WorkItemTracking'
+
+SDK.init({
+	applyTheme: true,
+	loaded: true,
+})
+;(async () => {
+	await SDK.ready()
+	console.info('Version', SDK.getExtensionContext().version)
+
+	const workItem = await SDK.getService<IWorkItemFormService>(WorkItemTrackingServiceIds.WorkItemFormService)
+	const relations = await workItem.getWorkItemRelations()
+	console.log(relations)
+})()
+```
