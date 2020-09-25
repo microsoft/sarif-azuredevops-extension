@@ -1,5 +1,9 @@
-Many SAST (static application security testing) tools attach SARIF (static analysis results interchange format) logs to work items.
-To view a SARIF log without this extension, you first download the attachment, then open it in a separate viewer.
-With this extension, you can view the SARIF log in context of the work item.
+
+This extension adds a tab named "Scans" in two locations:
+
+* **Build Result** - Displays any SARIF logs (`*.sarif`) found within the `CodeAnalysisLogs` artifact.
+* **Work Item** - Displays any SARIF logs (`*.sarif`) that are attached to the work item.
 
 This extension is a lightweight wrapper around the [SARIF Web Component](https://github.com/microsoft/sarif-web-component).
+
+SARIF is the Static Analysis Results Interchange Format. More information [here](http://sarifweb.azurewebsites.net/).

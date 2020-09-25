@@ -1,5 +1,6 @@
 # SARIF SAST Scans Tab
 
+See `vss-extension.md` for public facing info. This is for contributors/developers.
 
 ### Development: Localhost
 * In `index.tsx` switch to `VSS.SDK.mock.js`
