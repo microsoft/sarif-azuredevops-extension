@@ -1,12 +1,12 @@
-const path = require("path")
+const path = require('path')
 
 module.exports = [
 	{
 		entry: path.join(__dirname, 'src', 'build.tsx'),
-		output: { path: path.join(__dirname, 'src'), filename: "build.js" },
+		output: { path: path.join(__dirname, 'src'), filename: 'build.js' },
 		mode: 'production',
 		resolve: {
-			extensions: [".js", ".jsx", ".ts", ".tsx"],
+			extensions: ['.js', '.jsx', '.ts', '.tsx'],
 			alias: {
 				// LHS must match webpack `externals` of sarif-web-component.
 				'React': path.resolve('node_modules/react'),
@@ -41,10 +41,10 @@ module.exports = [
 	},	
 	{
 		entry: path.join(__dirname, 'src', 'workItem.tsx'),
-		output: { path: path.join(__dirname, 'src'), filename: "workItem.js" },
+		output: { path: path.join(__dirname, 'src'), filename: 'workItem.js' },
 		mode: 'production',
 		resolve: {
-			extensions: [".js", ".ts", ".tsx"],
+			extensions: ['.js', '.ts', '.tsx'],
 			alias: {
 				'React': path.resolve('node_modules/react'),
 				'ReactDOM': path.resolve('node_modules/react-dom'),
@@ -59,7 +59,7 @@ module.exports = [
 				},
 				{
 					test: /\.s?css$/,
-					use: ["style-loader", "css-loader", "sass-loader"]
+					use: ['style-loader', 'css-loader', 'sass-loader']
 				},
 				{ test: /\.png$/, use: 'url-loader' },
 				{ test: /\.woff$/, use: 'url-loader' },
