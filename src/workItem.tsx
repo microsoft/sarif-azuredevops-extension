@@ -1,3 +1,4 @@
+import { AppInsights } from "applicationinsights-js"
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {observable} from 'mobx'
@@ -8,6 +9,9 @@ declare var VSS: any
 // import {VSS} from './VSS.SDK.mock'
 
 import {Log, Viewer} from '@microsoft/sarif-web-component'
+import { calcToolNamesSet } from './calcToolNamesSet'
+
+const perfLoadStart = performance.now() // For telemetry.
 
 @observer class Tab extends React.Component {
 	static decoder = new TextDecoder() // @sinonjs/text-encoding polyfills IE.
@@ -19,6 +23,13 @@ import {Log, Viewer} from '@microsoft/sarif-web-component'
 			explicitNotifyLoaded: true,
 		})
 		VSS.require(['TFS/WorkItemTracking/RestClient'], witModule => { // Tfs/WebPlatform/Client/TFS/WorkItemTracking/RestClient.ts
+			const webContext = VSS.getWebContext()
+			console.info('Version', VSS.getExtensionContext().version)
+			AppInsights.setAuthenticatedUserContext(
+				webContext.user.uniqueName, // email
+				webContext.account.name, // organization
+			)
+
 			const onLoaded = async ({id}) => {
 				const witClient = witModule.getClient()
 				const workItem = await witClient.getWorkItem(id, null, null, 1)
@@ -35,10 +46,22 @@ import {Log, Viewer} from '@microsoft/sarif-web-component'
 				const logTexts = await Promise.all(files.map(async file => await file.sarif())) as string[]
 				const logs = logTexts.map(log => JSON.parse(log) as Log)
 				this.logs = logs
+
+				AppInsights.trackPageView(
+					webContext.project.name,
+					document.referrer, // sometimes full url, sometimes just the host
+					{ // customDimensions
+						page: 'workItem',
+						logLength: logs.length + '',
+						toolNames: [...calcToolNamesSet(logs).values()].join(' '),
+						version: VSS.getExtensionContext().version,
+					},
+					undefined,
+					performance.now() - perfLoadStart
+				)
 			}
 			VSS.register(VSS.getContribution().id, { onLoaded }) // ;onLoaded({ id: 1 })
 			VSS.notifyLoadSucceeded() // Not working within onLoaded()
-			console.info('Version', VSS.getExtensionContext().version)
 		})
 	}
 	render() {
@@ -53,4 +76,6 @@ import {Log, Viewer} from '@microsoft/sarif-web-component'
 	}
 }
 
+AppInsights.downloadAndSetup({ instrumentationKey: '' })
+addEventListener('unhandledrejection', e => AppInsights.trackException(e.reason))
 ReactDOM.render(<Tab />, document.getElementById("app"))
