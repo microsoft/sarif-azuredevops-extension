@@ -123,8 +123,9 @@ const perfLoadStart = performance.now() // For telemetry.
 		const {logs, user} = this
 		return !logs || logs.length
 			? <Viewer logs={logs} filterState={{
-				Baseline: { value: ['new', 'updated', 'absent'] },
+				Baseline: { value: ['new', 'updated', 'absent'] }, // Focusing on incremental changes.
 				Level: { value: ['error', 'warning'] },
+				Suppression: { value: ['unsuppressed']},
 			}} user={user} />
 			: <div className="full">No SARIF artifacts found.</div>
 	}

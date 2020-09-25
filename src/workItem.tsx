@@ -69,7 +69,8 @@ const perfLoadStart = performance.now() // For telemetry.
 		return !logs || logs.length
 			? <Viewer logs={logs} showSuppression
 				filterState={{
-					Baseline: { value: ['new', 'unchanged', 'updated'] },
+					Baseline: { value: ['new', 'updated', 'unchanged'] }, // Not focusing on incremental changes, focusing on current state.
+					Level: { value: ['error', 'warning'] },
 					Suppression: { value: ['unsuppressed']},
 				}} />
 			: <div className="full">No SARIF attachments found.</div>
