@@ -5,6 +5,15 @@
 	"version": "0.1.41",
 	"contributions": [
 		{
+			"id": "sariftools.sarif-viewer-build-tab",
+			"type": "ms.vss-build-web.build-results-tab",
+			"targets": ["ms.vss-build-web.build-results-view"],
+			"properties": {
+				"name": "Scans",
+				"uri": "build.html"
+			}
+		},
+		{
 			"id": "workitem-tab",
 			"type": "ms.vss-work-web.work-item-form-page",
 			"targets": ["ms.vss-work-web.work-item-form"],

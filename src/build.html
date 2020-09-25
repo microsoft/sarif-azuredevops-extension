@@ -1,0 +1,29 @@
+<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<!DOCTYPE html>
+<html>
+<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"><!-- Important otherwise & become Â's in webpack production compression -->
+	<style>
+		html, body, #app { height: 100%; }
+		#app {
+			/* background: #f8f8f8 /* Overrides VSS background set on body */
+			flex: 1 1 auto; /* azure-devops-ui injects body display flex. */
+			width: 100%;
+		}
+		.full {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 14px;
+			color: rgb(0, 120, 212);
+		}
+	</style>
+</head>
+<body>        
+	<div id="app"></div>
+	<script src="./build.js"></script>
+</body>
+</html>

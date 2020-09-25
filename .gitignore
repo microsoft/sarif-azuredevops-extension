@@ -3,7 +3,7 @@ node_modules
 vsix
 
 package-lock.json
-workItem.js
 *.txt
 
-/.vscode
+build.js
+workItem.js

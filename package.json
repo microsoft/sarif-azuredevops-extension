@@ -1,14 +1,17 @@
 {
-	"main": "index.js",
 	"scripts": {
 		"start": "webpack-dev-server --mode development",
 		"package": "webpack && tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json",
-		"publish": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.prod.json",
-		"publish-dev": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json"
+		"publish": "webpack && tfx extension publish --output-path: vsix --overrides-file vss-extension.prod.json",
+		"publish-dev": "webpack -d && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json"
 	},
 	"dependencies": {
 		"@microsoft/sarif-web-component": "0.3.0",
 		"@sinonjs/text-encoding": "^0.7.1",
+		"applicationinsights-js": "^1.0.21",
+		"azure-devops-extension-api": "^1.153.2",
+		"azure-devops-extension-sdk": "^2.0.11",
+		"jszip": "^3.5.0",
 		"mobx": "^5.10.1",
 		"mobx-react": "^6.1.1",
 		"react": "^16.8.6",
@@ -16,6 +19,7 @@
 		"vss-web-extension-sdk": "^5.141.0"
 	},
 	"devDependencies": {
+		"@types/applicationinsights-js": "^1.0.9",
 		"@types/react": "^16.8.18",
 		"@types/react-dom": "^16.8.4",
 		"autobind-decorator": "^2.4.0",
@@ -24,6 +28,7 @@
 		"sass-loader": "^7.1.0",
 		"script-loader": "^0.7.2",
 		"style-loader": "^0.23.1",
+		"tfx-cli": "^0.7.11",
 		"ts-loader": "^6.0.1",
 		"typescript": "^3.7.2",
 		"url-loader": "^2.0.0",
