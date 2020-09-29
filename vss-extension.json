@@ -1,6 +1,6 @@
 {
 	"manifestVersion": 1,
-	"description": "Adds a 'Scans' tab for viewing SARIF SAST scans in the context of each Build Result and Work Item.",
+	"description": "Adds a 'Scans' tab to each Build Result and Work Item for viewing associated SARIF SAST logs.",
 	"public": false,
 	"categories": ["Azure Boards"],
 	"targets": [{ "id": "Microsoft.VisualStudio.Services" }],
