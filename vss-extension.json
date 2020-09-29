@@ -1,8 +1,7 @@
 {
 	"manifestVersion": 1,
 	"description": "Adds a 'Scans' tab to each Build Result and Work Item for viewing associated SARIF SAST logs.",
-	"public": false,
-	"categories": ["Azure Boards"],
+	"categories": ["Azure Boards", "Azure Pipelines"],
 	"targets": [{ "id": "Microsoft.VisualStudio.Services" }],
 	"icons": { "default": "vss-extension.png" },
 	"content": { "details": { "path": "vss-extension.md" } },
