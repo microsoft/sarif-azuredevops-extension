@@ -2,11 +2,11 @@
 	"publisher": "sariftools",
 	"id": "scans",
 	"name": "SARIF SAST Scans Tab",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"public": true,
 	"contributions": [
 		{
-			"id": "sariftools.sarif-viewer-build-tab",
+			"id": "build-tab",
 			"type": "ms.vss-build-web.build-results-tab",
 			"targets": ["ms.vss-build-web.build-results-view"],
 			"properties": {
