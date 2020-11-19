@@ -127,7 +127,7 @@ const perfLoadStart = performance.now() // For telemetry.
 				Level: { value: ['error', 'warning'] },
 				Suppression: { value: ['unsuppressed']},
 			}} user={user} />
-			: <div className="full">No SARIF artifacts found.</div>
+			: <div className="full">No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs".</div>
 	}
 }
 
