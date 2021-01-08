@@ -1,0 +1,13 @@
+/* Subset of the styles originally provided by azure-devops-ui */
+
+body {
+	font-family: "Segoe UI", "-apple-system", BlinkMacSystemFont, Roboto, "Helvetica Neue", Helvetica, Ubuntu, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 0.875rem;
+	margin: 0;
+}
+
+input, select, textarea, button {
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit
+}
