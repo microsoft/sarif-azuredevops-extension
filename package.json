@@ -6,7 +6,7 @@
 		"publish-dev": "webpack -d && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json"
 	},
 	"dependencies": {
-		"@microsoft/sarif-web-component": "0.4.0",
+		"@microsoft/sarif-web-component": "0.5.0",
 		"@sinonjs/text-encoding": "^0.7.1",
 		"applicationinsights-js": "^1.0.21",
 		"azure-devops-extension-api": "^1.153.2",
