@@ -2,11 +2,6 @@
 
 See `vss-extension.md` for public facing info. This is for contributors/developers.
 
-### Development: Localhost
-* In `index.tsx` switch to `VSS.SDK.mock.js`
-* `npm start`
-* go to: `https://localhost:8080` and bypass the chrome warning.
-
 
 ### Development: DevOps Dev
 * `npm run publish-dev`
