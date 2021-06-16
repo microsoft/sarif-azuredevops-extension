@@ -6,11 +6,11 @@ import { AppInsights } from "applicationinsights-js"
 import { CommonServiceIds, getClient, IProjectPageService } from 'azure-devops-extension-api'
 import { BuildRestClient, BuildServiceIds, IBuildPageDataService } from 'azure-devops-extension-api/Build'
 import * as SDK from 'azure-devops-extension-sdk'
-import * as JSZip from 'jszip'
 import { observable, runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { getArtifactsFileEntries } from './build.getArtifactsFileEntries'
 
 const isProduction = self !== top
 const perfLoadStart = performance.now() // For telemetry.
@@ -49,18 +49,7 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			const buildClient = getClient(BuildRestClient)
 
-			const artifacts = await buildClient.getArtifacts(project.id, build.id)
-			const files = await (async () => {
-				if (!artifacts.some(a => a.name === 'CodeAnalysisLogs')) return []
-				const arrayBuffer = await buildClient.getArtifactContentZip(project.id, build.id, 'CodeAnalysisLogs')
-				const zip = await JSZip.loadAsync(arrayBuffer)
-				return Object.values(zip.files)
-					.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
-					.map(entry => ({
-						name:            entry.name.replace('CodeAnalysisLogs/', ''),
-						contentsPromise: entry.async('string')
-					}))
-			})()
+			const files = await getArtifactsFileEntries(buildClient, project.id, build.id)
 
 			const logTexts = await Promise.all(files.map(async file => {
 				let contents = await file.contentsPromise
