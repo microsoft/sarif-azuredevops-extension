@@ -27,7 +27,7 @@ const perfLoadStart = performance.now() // For telemetry.
 		})
 		;(async () => {
 			await SDK.ready()
-			console.info('Version', SDK.getExtensionContext().version)
+			console.info('Version', SDK.getExtensionContext().version, INSTRUMENTATION_KEY)
 
 			const user = SDK.getUser()
 			const organization = SDK.getHost().name
@@ -121,7 +121,7 @@ const perfLoadStart = performance.now() // For telemetry.
 }
 
 if (isProduction) {
-	AppInsights.downloadAndSetup({ instrumentationKey: '' })
+	AppInsights.downloadAndSetup({ instrumentationKey: INSTRUMENTATION_KEY })
 	addEventListener('unhandledrejection', e => AppInsights.trackException(e.reason))
 }
 ReactDOM.render(<Tab />, document.getElementById("app"))

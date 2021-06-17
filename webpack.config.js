@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 const path = require('path')
+const { DefinePlugin } = require('webpack')
 
-const common = {
+const common = env => ({
 	mode: 'production',
 	resolve: {
 		// LHS must match webpack `externals` of sarif-web-component.
@@ -28,11 +29,16 @@ const common = {
 			{ test: /\.woff$/, use: 'url-loader' },
 		]
 	},
-}
+	plugins: [
+		new DefinePlugin({
+			INSTRUMENTATION_KEY: JSON.stringify(env?.INSTRUMENTATION_KEY ?? ''),
+		})
+	],
+})
 
-module.exports = [
+module.exports = env => [
 	{
-		...common,
+		...common(env),
 		entry: path.join(__dirname, 'src', 'build.tsx'),
 		output: { path: path.join(__dirname, 'src'), filename: 'build.js' },
 		performance: {
@@ -47,7 +53,7 @@ module.exports = [
 		},
 	},	
 	{
-		...common,
+		...common(env),
 		entry: path.join(__dirname, 'src', 'workItem.tsx'),
 		output: { path: path.join(__dirname, 'src'), filename: 'workItem.js' },
 		performance: {

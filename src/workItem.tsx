@@ -24,7 +24,7 @@ const perfLoadStart = performance.now() // For telemetry.
 		})
 		VSS.require(['TFS/WorkItemTracking/RestClient'], witModule => { // Tfs/WebPlatform/Client/TFS/WorkItemTracking/RestClient.ts
 			const webContext = VSS.getWebContext()
-			console.info('Version', VSS.getExtensionContext().version)
+			console.info('Version', VSS.getExtensionContext().version, INSTRUMENTATION_KEY)
 			AppInsights.setAuthenticatedUserContext(
 				webContext.user.uniqueName, // email
 				webContext.account.name, // organization
@@ -77,6 +77,6 @@ const perfLoadStart = performance.now() // For telemetry.
 	}
 }
 
-AppInsights.downloadAndSetup({ instrumentationKey: '' })
+AppInsights.downloadAndSetup({ instrumentationKey: INSTRUMENTATION_KEY })
 addEventListener('unhandledrejection', e => AppInsights.trackException(e.reason))
 ReactDOM.render(<Tab />, document.getElementById("app"))
