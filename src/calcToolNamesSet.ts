@@ -1,4 +1,4 @@
-import { Log } from '@microsoft/sarif-web-component'
+import { Log } from 'sarif'
 
 export function calcToolNamesSet(logs: Log[]) {
 	const toolNames = logs.map(log => {

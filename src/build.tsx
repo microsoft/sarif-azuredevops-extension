@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { Log, Viewer } from '@microsoft/sarif-web-component'
+import { Viewer } from '@microsoft/sarif-web-component'
 import { AppInsights } from "applicationinsights-js"
 import { CommonServiceIds, getClient, IProjectPageService } from 'azure-devops-extension-api'
 import { BuildRestClient, BuildServiceIds, IBuildPageDataService } from 'azure-devops-extension-api/Build'
@@ -10,6 +10,7 @@ import { observable, runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Log } from 'sarif'
 import { getArtifactsFileEntries } from './build.getArtifactsFileEntries'
 
 const isProduction = self !== top

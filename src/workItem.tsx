@@ -8,8 +8,9 @@ import 'script-loader!vss-web-extension-sdk/lib/VSS.SDK.min.js'
 declare var VSS: any
 // import {VSS} from './VSS.SDK.mock'
 
-import {Log, Viewer} from '@microsoft/sarif-web-component'
+import { Viewer} from '@microsoft/sarif-web-component'
 import { calcToolNamesSet } from './calcToolNamesSet'
+import { Log } from 'sarif'
 
 const perfLoadStart = performance.now() // For telemetry.
 
