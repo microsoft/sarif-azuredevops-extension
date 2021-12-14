@@ -17,7 +17,7 @@ See `vss-extension.md` for public facing info. This is for contributors/develope
 ### Deployment
 ```
 npx webpack
-tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json
+npx tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json
 ```
 
 This creates a file inyour `./vsix` folder named `sariftools.scans-0.1.0.vsix` (version number will differ).
