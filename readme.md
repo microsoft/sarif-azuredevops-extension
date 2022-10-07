@@ -15,6 +15,7 @@ See `vss-extension.md` for public facing info. This is for contributors/develope
 
 
 ### Deployment
+Verify `vss-extension.prod.json` property `version` is incremented. If not, you risk overriting an old `vsix`.
 ```
 npx webpack
 npx tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json
