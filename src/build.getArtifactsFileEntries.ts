@@ -3,6 +3,9 @@ import { ArtifactBuildRestClient } from './ArtifactBuildRestClient'
 
 interface FileEntry {
 	name: string,
+	artifactName: string,
+	filePath: string,
+	buildId: number,
 	contentsPromise: Promise<string>
 }
 
@@ -27,6 +30,9 @@ export async function getArtifactsFileEntries(
 					.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
 					.map(entry => ({
 						name:            entry.name.replace(`${artifact.name}/`, ''),
+						artifactName:    artifact.name,
+						filePath:        this.name + this.artifactName,
+						buildId:         buildId,
 						contentsPromise: entry.async('string')
 					}))
 			})

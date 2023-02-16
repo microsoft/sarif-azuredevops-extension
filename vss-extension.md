@@ -6,4 +6,4 @@ This extension adds a tab named "Scans" in two locations:
 
 This extension is a lightweight wrapper around the [SARIF Web Component](https://github.com/microsoft/sarif-web-component).
 
-SARIF is the Static Analysis Results Interchange Format. More information [here](http://sarifweb.azurewebsites.net/).
+SARIF is the Static Analysis Results Interchange Format. More information [here](http://sarif.info/).

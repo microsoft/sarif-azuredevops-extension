@@ -1,12 +1,20 @@
 {
+	"name": "sarif-viewer-build-tab",
+	"version": "1.0.0",
+	"description": "SARIF Viewer DevOps Build Extension",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/microsoft/sarif-azuredevops-extension.git"
+	},
 	"scripts": {
 		"start": "webpack-dev-server --mode development",
 		"package": "webpack && tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json",
 		"publish": "webpack && tfx extension publish --output-path: vsix --overrides-file vss-extension.prod.json",
+		"publish-dev": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json",
 		"test": "jest"
 	},
 	"dependencies": {
-		"@microsoft/sarif-web-component": "^0.6.0-16",
+		"@microsoft/sarif-web-component": "^0.6.0-17",
 		"@sinonjs/text-encoding": "^0.7.1",
 		"applicationinsights-js": "^1.0.21",
 		"azure-devops-extension-api": "^1.153.2",
@@ -20,24 +28,25 @@
 	},
 	"devDependencies": {
 		"@types/applicationinsights-js": "^1.0.9",
-		"@types/jest": "^26.0.23",
+		"@types/jest": "^27.0.4",
 		"@types/react": "^16.8.18",
 		"@types/react-dom": "^16.8.4",
 		"@types/sarif": "^2.1.4",
 		"autobind-decorator": "^2.4.0",
 		"css-loader": "^2.1.1",
 		"jest": "^27.0.4",
-		"node-sass": "^4.12.0",
+		"node-sass": "^8.0.0",
 		"sass-loader": "^7.1.0",
 		"script-loader": "^0.7.2",
 		"style-loader": "^0.23.1",
-		"tfx-cli": "^0.7.11",
-		"ts-jest": "^27.0.3",
-		"ts-loader": "^6.0.1",
-		"typescript": "^3.7.2",
+		"tfx-cli": "^0.12.0",
+		"ts-jest": "^27.0.4",
+		"ts-loader": "^8.1.0",
+		"ts-node": "10.8.1",
+		"typescript": "^4.9.5",
 		"url-loader": "^2.0.0",
 		"webpack": "^4.32.2",
 		"webpack-cli": "^3.3.2",
-		"webpack-dev-server": "^3.4.1"
+		"webpack-dev-server": "^4.11.1"
 	}
 }

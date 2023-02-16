@@ -21,7 +21,7 @@ npx webpack
 npx tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json
 ```
 
-This creates a file inyour `./vsix` folder named `sariftools.scans-0.1.0.vsix` (version number will differ).
+This creates a file in your `./vsix` folder named `sariftools.scans-0.1.0.vsix` (version number will differ).
 
 Upload the `vsix` file to `https://marketplace.visualstudio.com/manage/publishers/YOUR_PUBLISHER_ID`. On that page, find the matching extension, choose `⋯`, and choose `Update`.
 

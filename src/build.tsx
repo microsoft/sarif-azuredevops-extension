@@ -87,6 +87,9 @@ const perfLoadStart = performance.now() // For telemetry.
 					log.runs.forEach(run => {
 						run.properties = run.properties || {}
 						run.properties['logFileName'] = files[i].name
+						run.properties['artifactName'] = files[i].artifactName
+						run.properties['filePath'] = files[i].filePath
+						run.properties['buildId'] = files[i].buildId
 					})
 				)
 			}
@@ -116,7 +119,7 @@ const perfLoadStart = performance.now() // For telemetry.
 				Baseline: { value: ['new', 'updated', 'absent'] }, // Focusing on incremental changes.
 				Level: { value: ['error', 'warning'] },
 				Suppression: { value: ['unsuppressed']},
-			}} user={user} />
+			}} user={user} showActions={true} />
 			: <div className="full">No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs".</div>
 	}
 }
