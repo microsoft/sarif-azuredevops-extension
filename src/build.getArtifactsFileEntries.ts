@@ -26,12 +26,13 @@ export async function getArtifactsFileEntries(
 			.map(async artifact => {
 				const arrayBuffer = await buildClient.getArtifactContentZip(project, buildId, artifact.name)
 				const zip = await JSZip.loadAsync(arrayBuffer)
-				return Object.values(zip.files)
+				return Object
+				    .values(zip.files)
 					.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
 					.map(entry => ({
 						name:            entry.name.replace(`${artifact.name}/`, ''),
 						artifactName:    artifact.name,
-						filePath:        this.name + this.artifactName,
+						filePath:        entry.name.replace(`${artifact.name}/`, '') + artifact.name,
 						buildId:         buildId,
 						contentsPromise: entry.async('string')
 					}))

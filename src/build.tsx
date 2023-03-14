@@ -87,12 +87,26 @@ const perfLoadStart = performance.now() // For telemetry.
 					log.runs.forEach(run => {
 						run.properties = run.properties || {}
 						run.properties['logFileName'] = files[i].name
-						run.properties['artifactName'] = files[i].artifactName
-						run.properties['filePath'] = files[i].filePath
-						run.properties['buildId'] = files[i].buildId
 					})
 				)
 			}
+
+			const buildProps = await buildClient.getBuild(project.name, build.id)
+			logs.forEach((log, i) => 
+				log.runs.forEach(run => {
+					// Add a versionControlProvenance if one is not already present.
+					if (!run.versionControlProvenance?.[0]) {
+						run.versionControlProvenance = [{ repositoryUri: buildProps.repository.url }];
+					} else {						
+						run.versionControlProvenance[0].repositoryUri = buildProps.repository.url;
+					}
+
+					// Metadata for use by the web component.
+					run.properties['artifactName'] = files[i].artifactName
+					run.properties['filePath'] = files[i].filePath
+					run.properties['buildId'] = files[i].buildId
+				})
+			)
 
 			runInAction(() => {
 				this.logs = logs

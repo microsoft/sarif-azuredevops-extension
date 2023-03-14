@@ -3,7 +3,7 @@
 	"id": "scans-dev",
 	"name": "SARIF SAST Scans Tab DEV",
 	"public": false,
-	"version": "0.3.8",
+	"version": "0.3.15",
 	"contributions": [
 		{
 			"id": "build-tab",

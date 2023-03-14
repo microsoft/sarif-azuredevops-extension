@@ -48,7 +48,6 @@ module.exports = env => [
 		devServer : {
 			host: '0.0.0.0', // Necessary to server outside localhost
 			port: 8080,
-			stats: 'none',
 			https: true,
 		},
 	},	
