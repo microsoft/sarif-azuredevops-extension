@@ -32,7 +32,7 @@ export async function getArtifactsFileEntries(
 					.map(entry => ({
 						name:            entry.name.replace(`${artifact.name}/`, ''),
 						artifactName:    artifact.name,
-						filePath:        entry.name.replace(`${artifact.name}/`, '') + artifact.name,
+						filePath:        entry.name.replace(`${artifact.name}/`, ''),
 						buildId:         buildId,
 						contentsPromise: entry.async('string')
 					}))
