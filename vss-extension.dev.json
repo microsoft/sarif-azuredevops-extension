@@ -1,8 +1,9 @@
 {
-	"publisher": "",
+	"publisher": "sariftools",
 	"id": "scans-dev",
 	"name": "SARIF SAST Scans Tab DEV",
 	"public": false,
+	"version": "0.3.17",
 	"contributions": [
 		{
 			"id": "build-tab",

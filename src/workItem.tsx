@@ -73,7 +73,7 @@ const perfLoadStart = performance.now() // For telemetry.
 					Baseline: { value: ['new', 'updated', 'unchanged'] }, // Not focusing on incremental changes, focusing on current state.
 					Level: { value: ['error', 'warning'] },
 					Suppression: { value: ['unsuppressed']},
-				}} />
+				}} showActions={false} />
 			: <div className="full">No SARIF attachments found.</div>
 	}
 }
