@@ -20,7 +20,7 @@ export class BuildRestClient2 extends RestClientBase {
         project: string,
         buildId: number,
         artifactName: string,
-        apiVersion: string = "7.0"
+        apiVersion: string = "7.1-preview.1"
         ): Promise<ArrayBuffer> {
 
         const queryValues: any = {
@@ -48,7 +48,7 @@ export class BuildRestClient2 extends RestClientBase {
     public async getArtifacts(
         project: string,
         buildId: number,
-        apiVersion: string = "7.0"
+        apiVersion: string = "7.1-preview.1"
         ): Promise<BuildArtifact[]> {
 
         return this.beginRequest<BuildArtifact[]>({
