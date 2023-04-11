@@ -11,7 +11,7 @@
 		"@microsoft/sarif-web-component": "^0.6.0-24",
 		"@sinonjs/text-encoding": "^0.7.1",
 		"applicationinsights-js": "^1.0.21",
-		"azure-devops-extension-api": "^1.153.2",
+		"azure-devops-extension-api": "^1.158.0",
 		"azure-devops-extension-sdk": "^2.0.11",
 		"jszip": "^3.5.0",
 		"mobx": "^5.10.1",
