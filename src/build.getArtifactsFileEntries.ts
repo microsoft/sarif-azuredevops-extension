@@ -25,24 +25,19 @@ export async function getArtifactsFileEntries(
 					|| artifact.name.endsWith('_sdl_sources')  // OneBranch
 			})
 			.map(async artifact => {
-				try {
-					const arrayBuffer = await buildClient.getArtifactContentZip(project, buildId, artifact.name)
-					const zip = await JSZip.loadAsync(arrayBuffer)
-					return Object
-						.values(zip.files)
-						.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
-						.map(entry => ({
-							name:            entry.name.replace(`${artifact.name}/`, ''),
-							artifactName:    artifact.name,
-							filePath:        entry.name.replace(`${artifact.name}/`, ''),
-							buildId:         buildId,
-							contentsPromise: entry.async('string')
-						}))
-				} catch (e) {
-					AppInsights.trackException(e, null, { artifactName: artifact.name, buildId: `${buildId}` })
-					return [];
-				}
-			})
+				const arrayBuffer = await buildClient.getArtifactContentZip(project, buildId, artifact.name)
+				const zip = await JSZip.loadAsync(arrayBuffer)
+				return Object
+					.values(zip.files)
+					.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
+					.map(entry => ({
+						name:            entry.name.replace(`${artifact.name}/`, ''),
+						artifactName:    artifact.name,
+						filePath:        entry.name.replace(`${artifact.name}/`, ''),
+						buildId:         buildId,
+						contentsPromise: entry.async('string')
+					}))
+				})
 	)
 	return files.flat()
 }
