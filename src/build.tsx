@@ -74,6 +74,9 @@ const perfLoadStart = performance.now() // For telemetry.
 				}
 			}).filter(log => log)
 
+			// Make sure each run has a property bag
+			logs.forEach(log => log.runs.forEach(run => run.properties = run.properties || {}))
+
 			const toolNames = logs.map(log => {
 				return log.runs
 					.filter(run => run.tool.driver) // Guard against old versions.

@@ -1,5 +1,6 @@
 import * as JSZip from 'jszip'
 import { ArtifactBuildRestClient } from './ArtifactBuildRestClient'
+import { AppInsights } from 'applicationinsights-js'
 
 interface FileEntry {
 	name: string,
@@ -27,7 +28,7 @@ export async function getArtifactsFileEntries(
 				const arrayBuffer = await buildClient.getArtifactContentZip(project, buildId, artifact.name)
 				const zip = await JSZip.loadAsync(arrayBuffer)
 				return Object
-				    .values(zip.files)
+					.values(zip.files)
 					.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
 					.map(entry => ({
 						name:            entry.name.replace(`${artifact.name}/`, ''),
@@ -36,7 +37,7 @@ export async function getArtifactsFileEntries(
 						buildId:         buildId,
 						contentsPromise: entry.async('string')
 					}))
-			})
+				})
 	)
 	return files.flat()
 }
