@@ -1,6 +1,5 @@
 import * as JSZip from 'jszip'
 import { ArtifactBuildRestClient } from './ArtifactBuildRestClient'
-import { AppInsights } from 'applicationinsights-js'
 
 interface FileEntry {
 	name: string,
