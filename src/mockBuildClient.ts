@@ -38,9 +38,11 @@ export const buildClient: ArtifactBuildRestClient = {
 	async getArtifacts(_project: string, _buildId: number): Promise<BuildArtifact[]> {
 		const artifacts = await generateMockBuildArtifacts()
 		return artifacts.map(a => ({ name: a.name })) as unknown as BuildArtifact[]
-	},
-	async getArtifactContentZip(_project: string, _buildId: number, artifactName: string): Promise<ArrayBuffer> {
+	}
+}
+
+export async function getArtifactContentZip(url: string): Promise<ArrayBuffer> {
+		const artifactName = url.split('/').pop()!
 		const artifacts = await generateMockBuildArtifacts()
 		return artifacts.find(a => a.name === artifactName)!.zipBuffer // Uint8Array is a subclass of ArrayBuffer
 	}
-}
