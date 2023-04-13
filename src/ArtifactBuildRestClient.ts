@@ -1,92 +1,33 @@
-import { IVssRestClientOptions } from 'azure-devops-extension-api';
-import { Build, BuildArtifact } from 'azure-devops-extension-api/Build'
-import { RestClientBase } from 'azure-devops-extension-api/Common/RestClientBase'
+import { BuildRestClient } from 'azure-devops-extension-api/Build'
+import { getAccessToken } from 'azure-devops-extension-sdk';
 
-export type ArtifactBuildRestClient = Pick<BuildRestClient2, 'getArtifacts' | 'getArtifactContentZip'>
+export type ArtifactBuildRestClient = Pick<BuildRestClient, 'getArtifacts'>
 
-export class BuildRestClient2 extends RestClientBase {
-    constructor(options: IVssRestClientOptions) {
-        super(options);
-    }
+export async function getArtifactContentZip(downloadUrl: string): Promise<ArrayBuffer> {
+    const accessToken = await getAccessToken();    
+    const acceptType = "application/zip";
+    const acceptHeaderValue = `${acceptType};excludeUrls=true;enumsAsNumbers=true;msDateFormat=true;noArrayWrap=true`;
     
-    /**
-     * Gets a specific artifact for a build.
-     * 
-     * @param project - Project ID or project name
-     * @param buildId - The ID of the build.
-     * @param artifactName - The name of the artifact.
-     */
-    public async getArtifactContentZip(
-        project: string,
-        buildId: number,
-        artifactName: string,
-        apiVersion: string = "7.1-preview.1"
-        ): Promise<ArrayBuffer> {
+    const headers = new Headers();
+    headers.append("Accept", acceptHeaderValue);
+    headers.append("Authorization", "Bearer " + accessToken);
+    headers.append("Content-Type", "application/zip");
+    headers.append("X-VSS-ReauthenticationAction", "Suppress");
 
-        const queryValues: any = {
-            artifactName: artifactName
-        };
+    const options: RequestInit = {
+        method: "GET",
+        mode: "cors",
+        credentials: "same-origin",
+        headers: headers
+    };
+    const response = await fetch(downloadUrl, options);
 
-        return this.beginRequest<ArrayBuffer>({
-            apiVersion: apiVersion,
-            httpResponseType: "application/zip",
-            routeTemplate: "{project}/_apis/build/builds/{buildId}/artifacts/{artifactName}",
-            routeValues: {
-                project: project,
-                buildId: buildId
-            },
-            queryParams: queryValues
-        });
+    if (response.status === 302) {
+        const redirectUrl = response.headers['location'] as string;
+        return await getArtifactContentZip(redirectUrl);
+    } else if (response.status === undefined || response.status < 200 || response.status >= 300) {
+        return;
     }
-    
-    /**
-     * Gets all artifacts for a build.
-     * 
-     * @param project - Project ID or project name
-     * @param buildId - The ID of the build.
-     */
-    public async getArtifacts(
-        project: string,
-        buildId: number,
-        apiVersion: string = "7.1-preview.1"
-        ): Promise<BuildArtifact[]> {
 
-        return this.beginRequest<BuildArtifact[]>({
-            apiVersion: apiVersion,
-            routeTemplate: "{project}/_apis/build/builds/{buildId}/artifacts/{artifactName}",
-            routeValues: {
-                project: project,
-                buildId: buildId
-            }
-        });
-    }
-    
-    /**
-     * Gets a build
-     * 
-     * @param project - Project ID or project name
-     * @param buildId - 
-     * @param propertyFilters - 
-     */
-    public async getBuild(
-        project: string,
-        buildId: number,
-        propertyFilters?: string,
-        apiVersion: string = "7.0"
-        ): Promise<Build> {
-
-        const queryValues: any = {
-            propertyFilters: propertyFilters
-        };
-
-        return this.beginRequest<Build>({
-            apiVersion: apiVersion,
-            routeTemplate: "{project}/_apis/build/builds/{buildId}",
-            routeValues: {
-                project: project,
-                buildId: buildId
-            },
-            queryParams: queryValues
-        });
-    }
+    return response.arrayBuffer();
 }

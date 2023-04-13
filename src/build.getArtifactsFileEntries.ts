@@ -1,5 +1,5 @@
 import * as JSZip from 'jszip'
-import { ArtifactBuildRestClient } from './ArtifactBuildRestClient'
+import { ArtifactBuildRestClient, getArtifactContentZip } from './ArtifactBuildRestClient'
 
 interface FileEntry {
 	name: string,
@@ -24,19 +24,29 @@ export async function getArtifactsFileEntries(
 					|| artifact.name.endsWith('_sdl_sources')  // OneBranch
 			})
 			.map(async artifact => {
-				const arrayBuffer = await buildClient.getArtifactContentZip(project, buildId, artifact.name)
-				const zip = await JSZip.loadAsync(arrayBuffer)
-				return Object
-					.values(zip.files)
-					.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
-					.map(entry => ({
-						name:            entry.name.replace(`${artifact.name}/`, ''),
-						artifactName:    artifact.name,
-						filePath:        entry.name.replace(`${artifact.name}/`, ''),
-						buildId:         buildId,
-						contentsPromise: entry.async('string')
-					}))
-				})
+				const requestUrl = artifact.resource.downloadUrl;
+				const arrayBuffer = await getArtifactContentZip(requestUrl)
+
+				if (arrayBuffer) {
+					const zip = await JSZip.loadAsync(arrayBuffer)
+
+					try {
+						return Object
+							.values(zip.files)
+							.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
+							.map(entry => ({
+								name:            entry.name.replace(`${artifact.name}/`, ''),
+								artifactName:    artifact.name,
+								filePath:        entry.name.replace(`${artifact.name}/`, ''),
+								buildId:         buildId,
+								contentsPromise: entry.async('string')
+							}))
+					} catch (e) {
+						console.error(`Error loading artifact ${artifact.name} from build ${buildId}`)
+						return []
+					}
+				}
+			})
 	)
 	return files.flat()
 }
