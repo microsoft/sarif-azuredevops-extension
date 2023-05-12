@@ -100,8 +100,6 @@ const perfLoadStart = performance.now() // For telemetry.
 					// Add a versionControlProvenance if one is not already present.
 					if (!run.versionControlProvenance?.[0]) {
 						run.versionControlProvenance = [{ repositoryUri: buildProps.repository.url }];
-					} else {						
-						run.versionControlProvenance[0].repositoryUri = buildProps.repository.url;
 					}
 
 					// Metadata for use by the web component.
