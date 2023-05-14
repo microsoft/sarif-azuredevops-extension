@@ -14,5 +14,5 @@
 		{ "addressable": true, "path": "src", "packagePath": "/" },
 		{ "addressable": true, "path": "node_modules/@sinonjs/text-encoding/lib", "packagePath": "/" }
 	],
-	"scopes": ["vso.build", "vso.work"]
+	"scopes": ["vso.build", "vso.work", "vso.identity"]
 }
