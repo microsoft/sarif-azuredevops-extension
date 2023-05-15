@@ -20,6 +20,7 @@ const perfLoadStart = performance.now() // For telemetry.
 	@observable.ref logs = undefined as Log[]
 	@observable pipelineId = undefined as string
 	@observable user = undefined as string
+	@observable tenant = undefined as string
 	constructor(props) {
 		super(props)
 		SDK.init({
@@ -34,6 +35,35 @@ const perfLoadStart = performance.now() // For telemetry.
 			const organization = SDK.getHost().name
 			if (isProduction) {
 				AppInsights.setAuthenticatedUserContext(user.name /* typically email */, organization)
+			}
+				
+			const accessToken = await SDK.getAccessToken();
+			const identitiesUri = `https://vssps.dev.azure.com/${organization}/_apis/identities?searchFilter=General&filterValue=${user.name}&queryMembership=None&api-version=7.0`
+			const headers = new Headers();
+			headers.append("Accept", "application/json");
+			headers.append("Authorization", "Bearer " + accessToken);
+			headers.append("X-VSS-ReauthenticationAction", "Suppress");
+
+			const options: RequestInit = {
+				method: "GET",
+				mode: "cors",
+				headers: headers
+			};
+
+			try {
+				const response = await fetch(identitiesUri, options)
+
+				if (response.ok) {
+					const json = await response.json()
+					this.tenant = json.value[0].properties["Domain"].$value
+					console.log(`Got tenant: ${this.tenant}`)
+				} else {
+					console.error(`Failed to get tenant: ${identitiesUri}`)
+					console.error(`Status code: ${response.status}`)
+				}
+			} catch (e) {
+				console.error(`Exception from Identities API request: ${e.message}`)
+				AppInsights.trackException(e, null, { organization: organization })
 			}
 
 			const projectService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
@@ -136,8 +166,11 @@ const perfLoadStart = performance.now() // For telemetry.
 				Baseline: { value: ['new', 'updated', 'absent'] }, // Focusing on incremental changes.
 				Level: { value: ['error', 'warning'] },
 				Suppression: { value: ['unsuppressed']},
-			}} user={user} showActions={true} />
-			: <div className="full">No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs".</div>
+			}} user={user} showActions={this.tenant === '72f988bf-86f1-41af-91ab-2d7cd011db47'} />
+			: <div className="full">
+				No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs".
+				<a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml" target="_blank" className='noArtifactLearnMore'>Learn more</a>
+			  </div>
 	}
 }
 
