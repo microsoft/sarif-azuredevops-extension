@@ -49,15 +49,21 @@ const perfLoadStart = performance.now() // For telemetry.
 				mode: "cors",
 				headers: headers
 			};
-			const response = await fetch(identitiesUri, options)
 
-			if (response.ok) {
-				const json = await response.json()
-				this.tenant = json.value[0].properties["Domain"].$value
-				console.log(`Got tenant: ${this.tenant}`)
-			} else {
-				console.error(`Failed to get tenant: ${identitiesUri}`)
-				console.error(`Status code: ${response.status}`)
+			try {
+				const response = await fetch(identitiesUri, options)
+
+				if (response.ok) {
+					const json = await response.json()
+					this.tenant = json.value[0].properties["Domain"].$value
+					console.log(`Got tenant: ${this.tenant}`)
+				} else {
+					console.error(`Failed to get tenant: ${identitiesUri}`)
+					console.error(`Status code: ${response.status}`)
+				}
+			} catch (e) {
+				console.error(`Exception from Identities API request: ${e.message}`)
+				AppInsights.trackException(e, null, { organization: organization })
 			}
 
 			const projectService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
@@ -161,7 +167,10 @@ const perfLoadStart = performance.now() // For telemetry.
 				Level: { value: ['error', 'warning'] },
 				Suppression: { value: ['unsuppressed']},
 			}} user={user} showActions={this.tenant === '72f988bf-86f1-41af-91ab-2d7cd011db47'} />
-			: <div className="full">No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs". <a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml" target="_blank">Learn more</a></div>
+			: <div className="full">
+				No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs".
+				<a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml" target="_blank" className='noArtifactLearnMore'>Learn more</a>
+			  </div>
 	}
 }
 
