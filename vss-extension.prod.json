@@ -2,7 +2,7 @@
 	"publisher": "sariftools",
 	"id": "scans",
 	"name": "SARIF SAST Scans Tab",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"public": true,
 	"contributions": [
 		{
