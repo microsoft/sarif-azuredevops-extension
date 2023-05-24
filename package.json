@@ -8,7 +8,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@microsoft/sarif-web-component": "^0.6.0-27",
+		"@microsoft/sarif-web-component": "^0.6.0-28",
 		"@sinonjs/text-encoding": "^0.7.1",
 		"applicationinsights-js": "^1.0.21",
 		"azure-devops-extension-api": "^1.158.0",
