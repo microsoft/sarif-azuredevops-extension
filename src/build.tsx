@@ -170,7 +170,7 @@ const perfLoadStart = performance.now() // For telemetry.
 				}}
 				user={user}
 				showActions={this.tenant === '72f988bf-86f1-41af-91ab-2d7cd011db47'}
-				successMessage={`No results found after running ${numberOfScans} scan${numberOfScans !== 1 ? 's' : ''}.`}
+				successMessage={`No results found after running ${numberOfScans} scan${numberOfScans !== 1 ? 's' : ''}`}
 			/>
 			: <div className="full">
 				No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs".
