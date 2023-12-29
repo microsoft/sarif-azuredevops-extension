@@ -159,7 +159,7 @@ const perfLoadStart = performance.now() // For telemetry.
 	}
 	render() {
 		const { logs, toolNames, user } = this
-		const numberOfScans = toolNames.size;
+		const numberOfScans = toolNames?.size ?? 0
 		return !logs || logs.length
 			? <Viewer
 				logs={logs}
