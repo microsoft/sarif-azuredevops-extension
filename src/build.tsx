@@ -29,14 +29,10 @@ const perfLoadStart = performance.now() // For telemetry.
 		})
 		;(async () => {
 			await SDK.ready()
-			console.info('Version', SDK.getExtensionContext().version, INSTRUMENTATION_KEY)
 
 			const user = SDK.getUser()
 			const organization = SDK.getHost().name
-			if (isProduction) {
-				AppInsights.setAuthenticatedUserContext(user.name /* typically email */, organization)
-			}
-				
+
 			const accessToken = await SDK.getAccessToken();
 			const identitiesUri = `https://vssps.dev.azure.com/${organization}/_apis/identities?searchFilter=General&filterValue=${user.name}&queryMembership=None&api-version=7.0`
 			const headers = new Headers();
@@ -56,14 +52,14 @@ const perfLoadStart = performance.now() // For telemetry.
 				if (response.ok) {
 					const json = await response.json()
 					this.tenant = json.value[0].properties["Domain"].$value
-					console.log(`Got tenant: ${this.tenant}`)
 				} else {
-					console.error(`Failed to get tenant: ${identitiesUri}`)
-					console.error(`Status code: ${response.status}`)
+					AppInsights.trackTrace('Failed to get tenant', {
+						status: response.status.toString(),
+						message: await response.text(),
+					})
 				}
 			} catch (e) {
-				console.error(`Exception from Identities API request: ${e.message}`)
-				AppInsights.trackException(e, null, { organization: organization })
+				AppInsights.trackException(e)
 			}
 
 			const projectService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
@@ -85,7 +81,7 @@ const perfLoadStart = performance.now() // For telemetry.
 			const logTexts = await Promise.all(files.map(async file => {
 				let contents = await file.contentsPromise
 				if (contents.match(/^\uFEFF/)) {
-					AppInsights.trackEvent('BOM trimmed')
+					AppInsights.trackTrace('BOM trimmed')
 					contents = contents.replace(/^\uFEFF/, ''); // Trim BOM to avoid 'Unexpected token ﻿ in JSON at position 0'.
 				}
 				return contents
@@ -93,7 +89,7 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			const logs = logTexts.map(log => {
 				if (log === '') {
-					AppInsights.trackEvent('Empty log')
+					AppInsights.trackTrace('Empty log')
 					return undefined
 				}
 				try {
@@ -116,7 +112,7 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			// Show file names when the tool names are homogeneous.
 			if (files.length > 1 && toolNamesSet.size === 1) {
-				logs.forEach((log, i) => 
+				logs.forEach((log, i) =>
 					log.runs.forEach(run => {
 						run.properties = run.properties || {}
 						run.properties['logFileName'] = files[i].name
@@ -125,7 +121,7 @@ const perfLoadStart = performance.now() // For telemetry.
 			}
 
 			const buildProps = await buildClient.getBuild(project.name, build.id)
-			logs.forEach((log, i) => 
+			logs.forEach((log, i) =>
 				log.runs.forEach(run => {
 					// Add a versionControlProvenance if one is not already present.
 					if (!run.versionControlProvenance?.[0]) {
@@ -144,7 +140,7 @@ const perfLoadStart = performance.now() // For telemetry.
 				this.pipelineId = `${organization}.${definition.id}`
 				this.user = user.name
 			})
-			
+
 			SDK.notifyLoadSucceeded()
 
 			if (isProduction) {
@@ -153,7 +149,7 @@ const perfLoadStart = performance.now() // For telemetry.
 					toolNames: [...toolNamesSet.values()].join(' '),
 					version: SDK.getExtensionContext().version,
 				}
-				AppInsights.trackPageView(project.name, document.referrer, customDimensions, undefined, performance.now() - perfLoadStart)
+				AppInsights.trackPageView('Build', undefined, customDimensions, undefined, performance.now() - perfLoadStart)
 			}
 		})()
 	}
