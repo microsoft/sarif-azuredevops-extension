@@ -33,10 +33,6 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			const user = SDK.getUser()
 			const organization = SDK.getHost().name
-			if (isProduction) {
-				AppInsights.setAuthenticatedUserContext(user.name /* typically email */, organization)
-			}
-
 			const accessToken = await SDK.getAccessToken();
 			const identitiesUri = `https://vssps.dev.azure.com/${organization}/_apis/identities?searchFilter=General&filterValue=${user.name}&queryMembership=None&api-version=7.0`
 			const headers = new Headers();
@@ -57,12 +53,13 @@ const perfLoadStart = performance.now() // For telemetry.
 					const json = await response.json()
 					this.tenant = json.value[0].properties["Domain"].$value
 				} else {
-					console.error(`Failed to get tenant: ${identitiesUri}`)
-					console.error(`Status code: ${response.status}`)
+					AppInsights.trackTrace('Failed to get tenant', {
+						status: response.status.toString(),
+						message: await response.text(),
+					})
 				}
 			} catch (e) {
-				console.error(`Exception from Identities API request: ${e.message}`)
-				AppInsights.trackException(e, null, { organization: organization })
+				AppInsights.trackException(e)
 			}
 
 			const projectService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
@@ -84,7 +81,7 @@ const perfLoadStart = performance.now() // For telemetry.
 			const logTexts = await Promise.all(files.map(async file => {
 				let contents = await file.contentsPromise
 				if (contents.match(/^\uFEFF/)) {
-					AppInsights.trackEvent('BOM trimmed')
+					AppInsights.trackTrace('BOM trimmed')
 					contents = contents.replace(/^\uFEFF/, ''); // Trim BOM to avoid 'Unexpected token ﻿ in JSON at position 0'.
 				}
 				return contents
@@ -92,7 +89,7 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			const logs = logTexts.map(log => {
 				if (log === '') {
-					AppInsights.trackEvent('Empty log')
+					AppInsights.trackTrace('Empty log')
 					return undefined
 				}
 				try {
@@ -153,7 +150,7 @@ const perfLoadStart = performance.now() // For telemetry.
 					toolNames: [...toolNamesSet.values()].join(' '),
 					version: SDK.getExtensionContext().version,
 				}
-				AppInsights.trackPageView(project.name, document.referrer, customDimensions, undefined, performance.now() - perfLoadStart)
+				AppInsights.trackPageView('Build', undefined, customDimensions, undefined, performance.now() - perfLoadStart)
 			}
 		})()
 	}

@@ -25,11 +25,6 @@ const perfLoadStart = performance.now() // For telemetry.
 		})
 		VSS.require(['TFS/WorkItemTracking/RestClient'], witModule => { // Tfs/WebPlatform/Client/TFS/WorkItemTracking/RestClient.ts
 			const webContext = VSS.getWebContext()
-			console.info('Version', VSS.getExtensionContext().version, INSTRUMENTATION_KEY)
-			AppInsights.setAuthenticatedUserContext(
-				webContext.user.uniqueName, // email
-				webContext.account.name, // organization
-			)
 
 			const onLoaded = async ({id}) => {
 				const witClient = witModule.getClient()
@@ -49,10 +44,9 @@ const perfLoadStart = performance.now() // For telemetry.
 				this.logs = logs
 
 				AppInsights.trackPageView(
-					webContext.project.name,
-					document.referrer, // sometimes full url, sometimes just the host
+					'WorkItem',
+					undefined,
 					{ // customDimensions
-						page: 'workItem',
 						logLength: logs.length + '',
 						toolNames: [...calcToolNamesSet(logs).values()].join(' '),
 						version: VSS.getExtensionContext().version,
