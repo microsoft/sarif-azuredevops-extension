@@ -18,6 +18,7 @@ const perfLoadStart = performance.now() // For telemetry.
 
 @observer class Tab extends React.Component {
 	@observable.ref logs = undefined as Log[]
+	@observable.ref toolNames = undefined as Set<string>
 	@observable pipelineId = undefined as string
 	@observable user = undefined as string
 	@observable tenant = undefined as string
@@ -29,14 +30,13 @@ const perfLoadStart = performance.now() // For telemetry.
 		})
 		;(async () => {
 			await SDK.ready()
-			console.info('Version', SDK.getExtensionContext().version, INSTRUMENTATION_KEY)
 
 			const user = SDK.getUser()
 			const organization = SDK.getHost().name
 			if (isProduction) {
 				AppInsights.setAuthenticatedUserContext(user.name /* typically email */, organization)
 			}
-				
+
 			const accessToken = await SDK.getAccessToken();
 			const identitiesUri = `https://vssps.dev.azure.com/${organization}/_apis/identities?searchFilter=General&filterValue=${user.name}&queryMembership=None&api-version=7.0`
 			const headers = new Headers();
@@ -56,7 +56,6 @@ const perfLoadStart = performance.now() // For telemetry.
 				if (response.ok) {
 					const json = await response.json()
 					this.tenant = json.value[0].properties["Domain"].$value
-					console.log(`Got tenant: ${this.tenant}`)
 				} else {
 					console.error(`Failed to get tenant: ${identitiesUri}`)
 					console.error(`Status code: ${response.status}`)
@@ -116,7 +115,7 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			// Show file names when the tool names are homogeneous.
 			if (files.length > 1 && toolNamesSet.size === 1) {
-				logs.forEach((log, i) => 
+				logs.forEach((log, i) =>
 					log.runs.forEach(run => {
 						run.properties = run.properties || {}
 						run.properties['logFileName'] = files[i].name
@@ -125,7 +124,7 @@ const perfLoadStart = performance.now() // For telemetry.
 			}
 
 			const buildProps = await buildClient.getBuild(project.name, build.id)
-			logs.forEach((log, i) => 
+			logs.forEach((log, i) =>
 				log.runs.forEach(run => {
 					// Add a versionControlProvenance if one is not already present.
 					if (!run.versionControlProvenance?.[0]) {
@@ -141,10 +140,11 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			runInAction(() => {
 				this.logs = logs
+				this.toolNames = toolNamesSet
 				this.pipelineId = `${organization}.${definition.id}`
 				this.user = user.name
 			})
-			
+
 			SDK.notifyLoadSucceeded()
 
 			if (isProduction) {
@@ -158,13 +158,20 @@ const perfLoadStart = performance.now() // For telemetry.
 		})()
 	}
 	render() {
-		const {logs, user} = this
+		const { logs, toolNames, user } = this
+		const numberOfScans = toolNames?.size ?? 0
 		return !logs || logs.length
-			? <Viewer logs={logs} filterState={{
-				Baseline: { value: ['new', 'updated', 'absent'] }, // Focusing on incremental changes.
-				Level: { value: ['error', 'warning'] },
-				Suppression: { value: ['unsuppressed']},
-			}} user={user} showActions={this.tenant === '72f988bf-86f1-41af-91ab-2d7cd011db47'} />
+			? <Viewer
+				logs={logs}
+				filterState={{
+					Baseline: { value: ['new', 'updated', 'absent'] }, // Focusing on incremental changes.
+					Level: { value: ['error', 'warning'] },
+					Suppression: { value: ['unsuppressed']},
+				}}
+				user={user}
+				showActions={this.tenant === '72f988bf-86f1-41af-91ab-2d7cd011db47'}
+				successMessage={`No results found after running ${numberOfScans} scan${numberOfScans !== 1 ? 's' : ''}`}
+			/>
 			: <div className="full">
 				No SARIF logs found. Logs must be placed within an Artifact named "CodeAnalysisLogs".
 				<a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml" target="_blank" className='noArtifactLearnMore'>Learn more</a>
