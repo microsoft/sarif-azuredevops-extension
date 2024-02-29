@@ -146,7 +146,8 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			if (isProduction) {
 				const customDimensions = {
-					logLength: logs.length + '',
+					results: logs.reduce((accum, log) => accum + log.runs.length, 0).toString(),
+					logs: logs.length.toString(),
 					toolNames: [...toolNamesSet.values()].join(' '),
 					version: SDK.getExtensionContext().version,
 				}

@@ -24,8 +24,6 @@ const perfLoadStart = performance.now() // For telemetry.
 			explicitNotifyLoaded: true,
 		})
 		VSS.require(['TFS/WorkItemTracking/RestClient'], witModule => { // Tfs/WebPlatform/Client/TFS/WorkItemTracking/RestClient.ts
-			const webContext = VSS.getWebContext()
-
 			const onLoaded = async ({id}) => {
 				const witClient = witModule.getClient()
 				const workItem = await witClient.getWorkItem(id, null, null, 1)
@@ -47,7 +45,8 @@ const perfLoadStart = performance.now() // For telemetry.
 					'WorkItem',
 					undefined,
 					{ // customDimensions
-						logLength: logs.length + '',
+						results: logs.reduce((accum, log) => accum + log.runs.length, 0).toString(),
+						logs: logs.length.toString(),
 						toolNames: [...calcToolNamesSet(logs).values()].join(' '),
 						version: VSS.getExtensionContext().version,
 					},
