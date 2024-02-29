@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Viewer } from '@microsoft/sarif-web-component'
-import { AppInsights } from "applicationinsights-js"
+import { ApplicationInsights } from "@microsoft/applicationinsights-web"
 import { CommonServiceIds, getClient, IProjectPageService } from 'azure-devops-extension-api'
 import { BuildRestClient, BuildServiceIds, IBuildPageDataService } from 'azure-devops-extension-api/Build'
 import * as SDK from 'azure-devops-extension-sdk'
@@ -15,6 +15,19 @@ import { getArtifactsFileEntries } from './build.getArtifactsFileEntries'
 
 const isProduction = self !== top
 const perfLoadStart = performance.now() // For telemetry.
+
+const appInsights = new ApplicationInsights({
+	config: {
+		connectionString: CONNECTION_STRING,
+	},
+})
+appInsights.loadAppInsights()
+
+if (isProduction) {
+	addEventListener('unhandledrejection', e => appInsights.trackException({
+		exception: e.reason
+	}))
+}
 
 @observer class Tab extends React.Component {
 	@observable.ref logs = undefined as Log[]
@@ -53,13 +66,13 @@ const perfLoadStart = performance.now() // For telemetry.
 					const json = await response.json()
 					this.tenant = json.value[0].properties["Domain"].$value
 				} else {
-					AppInsights.trackTrace('Failed to get tenant', {
+					appInsights.trackTrace({ message: 'Failed to get tenant' }, {
 						status: response.status.toString(),
 						message: await response.text(),
 					})
 				}
 			} catch (e) {
-				AppInsights.trackException(e)
+				appInsights.trackException({ exception: e })
 			}
 
 			const projectService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
@@ -69,7 +82,7 @@ const perfLoadStart = performance.now() // For telemetry.
 			const buildPageData = await buildPageDataService.getBuildPageData()
 			if (!buildPageData) {
 				SDK.notifyLoadSucceeded()
-				AppInsights.trackException(new Error('buildPageData undefined'))
+				appInsights.trackException({ exception: new Error('buildPageData undefined') })
 				return
 			}
 			const { build, definition } = buildPageData
@@ -81,7 +94,7 @@ const perfLoadStart = performance.now() // For telemetry.
 			const logTexts = await Promise.all(files.map(async file => {
 				let contents = await file.contentsPromise
 				if (contents.match(/^\uFEFF/)) {
-					AppInsights.trackTrace('BOM trimmed')
+					appInsights.trackTrace({ message: 'BOM trimmed' })
 					contents = contents.replace(/^\uFEFF/, ''); // Trim BOM to avoid 'Unexpected token ﻿ in JSON at position 0'.
 				}
 				return contents
@@ -89,13 +102,18 @@ const perfLoadStart = performance.now() // For telemetry.
 
 			const logs = logTexts.map(log => {
 				if (log === '') {
-					AppInsights.trackTrace('Empty log')
+					appInsights.trackTrace({ message: 'Empty log' })
 					return undefined
 				}
 				try {
 					return JSON.parse(log) as Log
 				} catch(e) {
-					AppInsights.trackException(e, null, { logSnippet: JSON.stringify(log.slice(0, 100)) })
+					appInsights.trackException({
+						exception: e,
+						properties: {
+							logSnippet: JSON.stringify(log.slice(0, 100))
+						}
+					})
 					return undefined
 				}
 			}).filter(log => log)
@@ -145,13 +163,17 @@ const perfLoadStart = performance.now() // For telemetry.
 			SDK.notifyLoadSucceeded()
 
 			if (isProduction) {
-				const customDimensions = {
-					results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0).toString(),
-					logs: logs.length.toString(),
-					toolNames: [...toolNamesSet.values()].join(' '),
-					version: SDK.getExtensionContext().version,
-				}
-				AppInsights.trackPageView('Build', undefined, customDimensions, undefined, performance.now() - perfLoadStart)
+				appInsights.trackPageView({
+					name: 'Build',
+					uri: undefined,
+					properties: {
+						duration: performance.now() - perfLoadStart,
+						results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0),
+						logs: logs.length,
+						toolNames: toolNamesSet.values(),
+						version: SDK.getExtensionContext().version,
+					},
+				})
 			}
 		})()
 	}
@@ -177,8 +199,4 @@ const perfLoadStart = performance.now() // For telemetry.
 	}
 }
 
-if (isProduction) {
-	AppInsights.downloadAndSetup({ instrumentationKey: INSTRUMENTATION_KEY })
-	addEventListener('unhandledrejection', e => AppInsights.trackException(e.reason))
-}
 ReactDOM.render(<Tab />, document.getElementById("app"))
