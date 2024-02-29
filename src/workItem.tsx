@@ -1,4 +1,4 @@
-import { AppInsights } from "applicationinsights-js"
+import { ApplicationInsights } from "@microsoft/applicationinsights-web"
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import {observable} from 'mobx'
@@ -13,6 +13,16 @@ import { calcToolNamesSet } from './calcToolNamesSet'
 import { Log } from 'sarif'
 
 const perfLoadStart = performance.now() // For telemetry.
+
+const appInsights = new ApplicationInsights({
+	config: {
+		connectionString: CONNECTION_STRING,
+	},
+})
+appInsights.loadAppInsights()
+addEventListener('unhandledrejection', e => appInsights.trackException({
+	exception: e.reason
+}))
 
 @observer class Tab extends React.Component {
 	static decoder = new TextDecoder() // @sinonjs/text-encoding polyfills IE.
@@ -41,18 +51,17 @@ const perfLoadStart = performance.now() // For telemetry.
 				const logs = logTexts.map(log => JSON.parse(log) as Log)
 				this.logs = logs
 
-				AppInsights.trackPageView(
-					'WorkItem',
-					undefined,
-					{ // customDimensions
-						results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0).toString(),
-						logs: logs.length.toString(),
-						toolNames: [...calcToolNamesSet(logs).values()].join(' '),
+				appInsights.trackPageView({
+					name: 'WorkItem',
+					uri: undefined,
+					properties: {
+						duration: performance.now() - perfLoadStart,
+						results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0),
+						logs: logs.length,
+						toolNames: calcToolNamesSet(logs).values(),
 						version: VSS.getExtensionContext().version,
 					},
-					undefined,
-					performance.now() - perfLoadStart
-				)
+				})
 			}
 			VSS.register(VSS.getContribution().id, { onLoaded }) // ;onLoaded({ id: 1 })
 			VSS.notifyLoadSucceeded() // Not working within onLoaded()
@@ -71,6 +80,4 @@ const perfLoadStart = performance.now() // For telemetry.
 	}
 }
 
-AppInsights.downloadAndSetup({ instrumentationKey: INSTRUMENTATION_KEY })
-addEventListener('unhandledrejection', e => AppInsights.trackException(e.reason))
 ReactDOM.render(<Tab />, document.getElementById("app"))

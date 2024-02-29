@@ -1,1 +1,1 @@
-declare const INSTRUMENTATION_KEY: string
+declare const CONNECTION_STRING: string

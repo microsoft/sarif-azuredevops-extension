@@ -31,7 +31,7 @@ const common = env => ({
 	},
 	plugins: [
 		new DefinePlugin({
-			INSTRUMENTATION_KEY: JSON.stringify(env?.INSTRUMENTATION_KEY ?? ''),
+			CONNECTION_STRING: JSON.stringify(env?.CONNECTION_STRING ?? ''),
 		})
 	],
 })
@@ -50,7 +50,7 @@ module.exports = env => [
 			port: 8080,
 			https: true,
 		},
-	},	
+	},
 	{
 		...common(env),
 		entry: path.join(__dirname, 'src', 'workItem.tsx'),

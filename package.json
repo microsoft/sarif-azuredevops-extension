@@ -8,9 +8,9 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"@microsoft/applicationinsights-web": "^3.1.0",
 		"@microsoft/sarif-web-component": "^0.6.0-28",
 		"@sinonjs/text-encoding": "^0.7.1",
-		"applicationinsights-js": "^1.0.21",
 		"azure-devops-extension-api": "^1.158.0",
 		"azure-devops-extension-sdk": "^2.0.11",
 		"jszip": "^3.5.0",
@@ -21,7 +21,6 @@
 		"vss-web-extension-sdk": "^5.141.0"
 	},
 	"devDependencies": {
-		"@types/applicationinsights-js": "^1.0.9",
 		"@types/jest": "^27.0.4",
 		"@types/react": "^16.8.18",
 		"@types/react-dom": "^16.8.4",
