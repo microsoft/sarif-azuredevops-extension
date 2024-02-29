@@ -13,7 +13,6 @@ import * as ReactDOM from 'react-dom'
 import { Log } from 'sarif'
 import { getArtifactsFileEntries } from './build.getArtifactsFileEntries'
 
-const isProduction = self !== top
 const perfLoadStart = performance.now() // For telemetry.
 
 const appInsights = new ApplicationInsights({
@@ -22,12 +21,9 @@ const appInsights = new ApplicationInsights({
 	},
 })
 appInsights.loadAppInsights()
-
-if (isProduction) {
-	addEventListener('unhandledrejection', e => appInsights.trackException({
-		exception: e.reason
-	}))
-}
+addEventListener('unhandledrejection', e => appInsights.trackException({
+	exception: e.reason
+}))
 
 @observer class Tab extends React.Component {
 	@observable.ref logs = undefined as Log[]
@@ -162,19 +158,17 @@ if (isProduction) {
 
 			SDK.notifyLoadSucceeded()
 
-			if (isProduction) {
-				appInsights.trackPageView({
-					name: 'Build',
-					uri: undefined,
-					properties: {
-						duration: performance.now() - perfLoadStart,
-						results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0),
-						logs: logs.length,
-						toolNames: toolNamesSet.values(),
-						version: SDK.getExtensionContext().version,
-					},
-				})
-			}
+			appInsights.trackPageView({
+				name: 'Build',
+				uri: undefined,
+				properties: {
+					duration: performance.now() - perfLoadStart,
+					results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0),
+					logs: logs.length,
+					toolNames: toolNamesSet.values(),
+					version: SDK.getExtensionContext().version,
+				},
+			})
 		})()
 	}
 	render() {
