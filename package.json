@@ -30,7 +30,6 @@
 		"autobind-decorator": "^2.4.0",
 		"css-loader": "^6.7.3",
 		"jest": "^27.0.4",
-		"node-sass": "^8.0.0",
 		"sass": "^1.58.3",
 		"sass-loader": "^13.2.0",
 		"script-loader": "^0.7.2",
