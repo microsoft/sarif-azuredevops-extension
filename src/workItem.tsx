@@ -45,7 +45,7 @@ const perfLoadStart = performance.now() // For telemetry.
 					'WorkItem',
 					undefined,
 					{ // customDimensions
-						results: logs.reduce((accum, log) => accum + log.runs.length, 0).toString(),
+						results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0).toString(),
 						logs: logs.length.toString(),
 						toolNames: [...calcToolNamesSet(logs).values()].join(' '),
 						version: VSS.getExtensionContext().version,
