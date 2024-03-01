@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/* # Always use latest LTS
+        cache: npm
+
+    - name: npm ci
+      run: npm ci
+
+    - name: npm run build
+      run: npm run build
+      
+    - name: npm run test
+      run: npm run test
