@@ -160,7 +160,6 @@ addEventListener('unhandledrejection', e => appInsights.trackException({
 
 			appInsights.trackPageView({
 				name: 'Build',
-				uri: undefined,
 				properties: {
 					duration: performance.now() - perfLoadStart,
 					results: logs.reduce((accum, log) => accum + log.runs.reduce((accum, run) => accum + run.results?.length ?? 0, 0), 0),
