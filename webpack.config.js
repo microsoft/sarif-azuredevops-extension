@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { DefinePlugin } = require('webpack')
 
 module.exports = env => ({
@@ -46,6 +47,9 @@ module.exports = env => ({
 	plugins: [
 		new DefinePlugin({
 			CONNECTION_STRING: JSON.stringify(env?.CONNECTION_STRING ?? ''),
-		})
+		}),
+		new CopyWebpackPlugin({
+			patterns: [{ from: "**/*.html", context: "src" }],
+		}),
 	],
 })
