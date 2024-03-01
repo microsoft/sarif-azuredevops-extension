@@ -50,36 +50,3 @@ jobs:
       with:
         name: vsix
         path: '*.vsix'
-
-  deployDev:
-    runs-on: windows-latest
-    needs: build
-
-    steps:
-    - uses: actions/download-artifact@v4
-      with:
-        name: vsix
-        path: .
-        pattern: sariftools.scans-dev.vsix
-
-    - uses: JamieMagee/azure-devops-extension-actions/publish-extension@main
-      with:
-        token: ${{ secrets.MARKETPLACE_TOKEN }}
-        vsix: sariftools.scans-dev.vsix
-
-  deployProd:
-    runs-on: windows-latest
-    needs: deployDev
-    environment: production
-
-    steps:
-    - uses: actions/download-artifact@v4
-      with:
-        name: vsix
-        path: .
-        pattern: sariftools.scans.vsix
-
-    - uses: JamieMagee/azure-devops-extension-actions/publish-extension@main
-      with:
-        token: ${{ secrets.MARKETPLACE_TOKEN }}
-        vsix: sariftools.scans.vsix
