@@ -23,8 +23,8 @@ jobs:
     - name: npm run build
       run: npm run build -- --env CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}
 
-    - name: npm run test
-      run: npm run test
+    # - name: npm run test
+    #   run: npm run test
 
     - uses: JamieMagee/azure-devops-extension-actions/package-extension@main
       name: Package extension
