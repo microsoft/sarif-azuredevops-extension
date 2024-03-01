@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches:
+    - main
   pull_request:
     branches:
     - main
@@ -21,7 +24,62 @@ jobs:
       run: npm ci
 
     - name: npm run build
-      run: npm run build
-      
+      run: npm run build -- --env CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}
+
     - name: npm run test
       run: npm run test
+
+    - uses: JamieMagee/azure-devops-extension-actions/package-extension@main
+      name: Package extension
+      with:
+        root-directory: dist
+        manifest-patterns: |
+          vss-extension.json
+          vss-extension.prod.json
+
+    - uses: JamieMagee/azure-devops-extension-actions/package-extension@main
+      name: Package dev extension
+      with:
+        root-directory: dist
+        manifest-patterns: |
+          vss-extension.json
+          vss-extension.dev.json
+        output-path: sariftools.scans-dev.vsix
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: vsix
+        path: '*.vsix'
+
+  deployDev:
+    runs-on: windows-latest
+    needs: build
+
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: vsix
+        path: .
+        pattern: sariftools.scans-dev.vsix
+
+    - uses: JamieMagee/azure-devops-extension-actions/publish-extension@main
+      with:
+        token: ${{ secrets.MARKETPLACE_TOKEN }}
+        vsix: sariftools.scans-dev.vsix
+
+  deployProd:
+    runs-on: windows-latest
+    needs: deployDev
+    environment: production
+
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: vsix
+        path: .
+        pattern: sariftools.scans.vsix
+
+    - uses: JamieMagee/azure-devops-extension-actions/publish-extension@main
+      with:
+        token: ${{ secrets.MARKETPLACE_TOKEN }}
+        vsix: sariftools.scans.vsix
