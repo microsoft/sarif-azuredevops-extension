@@ -32,14 +32,12 @@ jobs:
     - name: Package extension
       run: >
         tfx extension create
-        --root dist
         --manifests vss-extension.json vss-extension.prod.json
         --output-path sariftools.scans.vsix
 
     - name: Package dev extension
       run: >
         tfx extension create
-        --root dist
         --manifests vss-extension.json vss-extension.dev.json
         --output-path sariftools.scans-dev.vsix
 
