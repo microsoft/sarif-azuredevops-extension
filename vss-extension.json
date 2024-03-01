@@ -11,7 +11,11 @@
 		"member"
 	],
 	"files": [
-		{ "addressable": true, "path": "src", "packagePath": "/" },
+		{
+			"addressable": true,
+			"path": "dist",
+			"packagePath": "/"
+		},
 		{ "addressable": true, "path": "node_modules/@sinonjs/text-encoding/lib", "packagePath": "/" }
 	],
 	"scopes": ["vso.build", "vso.work", "vso.identity"]

@@ -2,10 +2,20 @@
 // Licensed under the MIT License.
 
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { DefinePlugin } = require('webpack')
 
-const common = env => ({
+module.exports = env => ({
 	mode: 'production',
+	entry: {
+		build: path.join(__dirname, 'src', 'build.tsx'),
+		workItem: path.join(__dirname, 'src', 'workItem.tsx'),
+	},
+	output: {
+		clean: true,
+		filename: '[name].js',
+		path: path.resolve(__dirname, 'dist'),
+	},
 	resolve: {
 		// LHS must match webpack `externals` of sarif-web-component.
 		extensions: ['.js', '.ts', '.tsx'],
@@ -29,35 +39,17 @@ const common = env => ({
 			{ test: /\.woff$/, use: 'url-loader' },
 		]
 	},
+	devServer : {
+		host: '0.0.0.0', // Necessary to server outside localhost
+		port: 8080,
+		https: true,
+	},
 	plugins: [
 		new DefinePlugin({
 			CONNECTION_STRING: JSON.stringify(env?.CONNECTION_STRING ?? ''),
-		})
+		}),
+		new CopyWebpackPlugin({
+			patterns: [{ from: "**/*.html", context: "src" }],
+		}),
 	],
 })
-
-module.exports = env => [
-	{
-		...common(env),
-		entry: path.join(__dirname, 'src', 'build.tsx'),
-		output: { path: path.join(__dirname, 'src'), filename: 'build.js' },
-		performance: {
-			maxAssetSize: 1.3 * 1024 * 1024,
-			maxEntrypointSize: 1.3 * 1024 * 1024,
-		},
-		devServer : {
-			host: '0.0.0.0', // Necessary to server outside localhost
-			port: 8080,
-			https: true,
-		},
-	},
-	{
-		...common(env),
-		entry: path.join(__dirname, 'src', 'workItem.tsx'),
-		output: { path: path.join(__dirname, 'src'), filename: 'workItem.js' },
-		performance: {
-			maxAssetSize: 1.12 * 1024 * 1024,
-			maxEntrypointSize: 1.12 * 1024 * 1024,
-		},
-	},
-]

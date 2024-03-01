@@ -1,10 +1,8 @@
 {
 	"scripts": {
 		"start": "webpack-dev-server --mode development",
-		"package": "webpack && tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json",
-		"package-dev": "webpack && tfx extension create --output-path: vsix --rev-version --overrides-file vss-extension.dev.json",
-		"publish": "webpack && tfx extension publish --output-path: vsix --overrides-file vss-extension.prod.json",
-		"publish-dev": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json",
+		"build": "webpack",
+		"build:dev": "webpack --mode development",
 		"test": "jest"
 	},
 	"dependencies": {
@@ -27,6 +25,7 @@
 		"@types/sarif": "^2.1.4",
 		"@webpack-cli/serve": "^2.0.1",
 		"autobind-decorator": "^2.4.0",
+		"copy-webpack-plugin": "^12.0.2",
 		"css-loader": "^6.7.3",
 		"jest": "^27.0.4",
 		"sass": "^1.58.3",
