@@ -21,7 +21,7 @@ jobs:
       run: npm ci
 
     - name: npm run build
-      run: npm run build -- --env CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}
+      run: npm run build -- --env CONNECTION_STRING="${{ secrets.CONNECTION_STRING }}"
 
     # - name: npm run test
     #   run: npm run test
