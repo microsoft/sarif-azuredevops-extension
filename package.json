@@ -1,10 +1,8 @@
 {
 	"scripts": {
 		"start": "webpack-dev-server --mode development",
-		"package": "webpack && tfx extension create --output-path: vsix --overrides-file vss-extension.prod.json",
-		"package-dev": "webpack && tfx extension create --output-path: vsix --rev-version --overrides-file vss-extension.dev.json",
-		"publish": "webpack && tfx extension publish --output-path: vsix --overrides-file vss-extension.prod.json",
-		"publish-dev": "webpack && tfx extension publish --output-path: vsix --rev-version --overrides-file vss-extension.dev.json",
+		"build": "webpack",
+		"build:dev": "webpack --mode development",
 		"test": "jest"
 	},
 	"dependencies": {
