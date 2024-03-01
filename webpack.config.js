@@ -49,7 +49,7 @@ module.exports = env => ({
 			CONNECTION_STRING: JSON.stringify(env?.CONNECTION_STRING ?? ''),
 		}),
 		new CopyWebpackPlugin({
-			patterns: [{ from: "**/*.html", context: "src" }],
+			patterns: [{ from: "**/*.{html,css}", context: "src" }],
 		}),
 	],
 })
