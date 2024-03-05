@@ -44,19 +44,17 @@ addEventListener('unhandledrejection', e => appInsights.trackException({
 			const organization = SDK.getHost().name
 			const accessToken = await SDK.getAccessToken();
 			const identitiesUri = `https://vssps.dev.azure.com/${organization}/_apis/identities?searchFilter=General&filterValue=${user.name}&queryMembership=None&api-version=7.0`
-			const headers = new Headers();
-			headers.append("Accept", "application/json");
-			headers.append("Authorization", "Bearer " + accessToken);
-			headers.append("X-VSS-ReauthenticationAction", "Suppress");
-
-			const options: RequestInit = {
-				method: "GET",
-				mode: "cors",
-				headers: headers
-			};
 
 			try {
-				const response = await fetch(identitiesUri, options)
+				const response = await fetch(identitiesUri, {
+					method: "GET",
+					mode: "cors",
+					headers: {
+						"Accept": "application/json",
+						"Authorization": `Bearer ${accessToken}`,
+						"X-VSS-ReauthenticationAction": "Suppress",
+					}
+				})
 
 				if (response.ok) {
 					const json = await response.json()
@@ -69,6 +67,10 @@ addEventListener('unhandledrejection', e => appInsights.trackException({
 				}
 			} catch (e) {
 				appInsights.trackException({ exception: e })
+			}
+
+			if (this.tenant === '72f988bf-86f1-41af-91ab-2d7cd011db47') {
+				appInsights.setAuthenticatedUserContext(user.name, organization)
 			}
 
 			const projectService = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
@@ -170,6 +172,7 @@ addEventListener('unhandledrejection', e => appInsights.trackException({
 			})
 		})()
 	}
+
 	render() {
 		const { logs, toolNames, user } = this
 		const numberOfScans = toolNames?.size ?? 0
