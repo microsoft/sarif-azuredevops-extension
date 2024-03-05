@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build:dev",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "npm: build:dev",
+			"detail": "webpack --mode development"
+		}
+	]
+}
