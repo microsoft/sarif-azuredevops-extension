@@ -141,7 +141,10 @@ addEventListener('unhandledrejection', e => appInsights.trackException({
 				log.runs.forEach(run => {
 					// Add a versionControlProvenance if one is not already present.
 					if (!run.versionControlProvenance?.[0]) {
-						run.versionControlProvenance = [{ repositoryUri: buildProps.repository.url }];
+						run.versionControlProvenance = [{
+							repositoryUri: buildProps.repository.url,
+							revisionId: buildProps.sourceVersion,
+						}];
 					}
 
 					// Metadata for use by the web component.
