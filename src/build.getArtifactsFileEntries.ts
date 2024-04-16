@@ -33,7 +33,7 @@ export async function getArtifactsFileEntries(
 					try {
 						return Object
 							.values(zip.files)
-							.filter(entry => !entry.dir && entry.name.endsWith('.sarif'))
+							.filter(entry => !entry.dir && (entry.name.endsWith('.sarif') || entry.name.endsWith('.sarif.json')))
 							.map(entry => ({
 								name:            entry.name.replace(`${artifact.name}/`, ''),
 								artifactName:    artifact.name,
