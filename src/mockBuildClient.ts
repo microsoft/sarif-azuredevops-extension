@@ -29,6 +29,12 @@ async function generateMockBuildArtifacts() {
 			await generateMockBuildArtifact('foo_sdl_sources',      'foo_sdl_sources.sarif'),
 			await generateMockBuildArtifact('foo_sdl_sources_bar',  'foo_sdl_sources_bar.sarif'),
 			await generateMockBuildArtifact('nonSarifArtifact',     'nonSarifArtifact.sarif'),
+			await generateMockBuildArtifact('CodeAnalysisLogs',     'CodeAnalysisLogs.sarif.json'),
+			await generateMockBuildArtifact('foo_sdl_analysis',     'foo_sdl_analysis.sarif.json'),
+			await generateMockBuildArtifact('foo_sdl_analysis_bar', 'foo_sdl_analysis_bar.sarif.json'),
+			await generateMockBuildArtifact('foo_sdl_sources',      'foo_sdl_sources.sarif.json'),
+			await generateMockBuildArtifact('foo_sdl_sources_bar',  'foo_sdl_sources_bar.sarif.json'),
+			await generateMockBuildArtifact('nonSarifArtifact',     'nonSarifArtifact.sarif.json'),
 		] 
 	}
 	return mockBuildArtifacts
