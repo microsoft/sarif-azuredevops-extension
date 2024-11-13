@@ -14,7 +14,7 @@ jobs:
 
     - uses: actions/setup-node@v4
       with:
-        node-version: lts/* # Always use latest LTS
+        node-version: 20
         cache: npm
 
     - name: npm ci
