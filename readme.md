@@ -11,7 +11,7 @@ See `vss-extension.md` for public facing info. This is for contributors/develope
 ### Development: DevOps BaseUri
 * `npm run publish-dev` with `baseUri`
 * go to: `https://localhost:8080` and bypass the chrome warning.
-* go to: `https://dev.azure.com/jeffkingms/Project%20Zero/_workitems/edit/1/`
+* go to: `https://dev.azure.com/jeffkingms/Project%20Zero/_workitems/edit/1/` bla
 
 
 ### Deployment
