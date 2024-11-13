@@ -7,7 +7,7 @@
 	},
 	"dependencies": {
 		"@microsoft/applicationinsights-web": "^3.1.0",
-		"@microsoft/sarif-web-component": "^0.6.0-28",
+		"@microsoft/sarif-web-component": "^0.6.0-29",
 		"@sinonjs/text-encoding": "^0.7.1",
 		"azure-devops-extension-api": "^1.158.0",
 		"azure-devops-extension-sdk": "^2.0.11",
