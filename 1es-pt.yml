@@ -13,16 +13,3 @@ extends:
   parameters:
     pool:
       name: 'TSA-Windows-Hosted-Pool'
-
-    stages:
-    - stage: Stage
-      jobs:
-      - job: HostJob
-        templateContext:
-          outputs:
-          - output: pipelineArtifact
-            targetPath: $(System.DefaultWorkingDirectory)/Samples
-            artifactName: artifactName
-        # Hello world step
-        steps:
-        - powershell: echo "Hello World from host"
