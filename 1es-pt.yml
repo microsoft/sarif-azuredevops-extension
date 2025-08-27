@@ -13,13 +13,3 @@ extends:
   parameters:
     pool:
       name: 'TSA-Windows-Hosted-Pool'
-
-    stages:
-    - stage: Stage
-      jobs:
-      - job: HostJob
-        templateContext:
-          outputs:
-          - output: pipelineArtifact
-            path: $(Build.ArtifactStagingDirectory)/ArtifactOutputs
-            artifact: drop
