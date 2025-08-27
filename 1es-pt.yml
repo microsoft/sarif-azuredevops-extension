@@ -21,8 +21,8 @@ extends:
         steps:
         - powershell: |
             mkdir "$(Build.ArtifactStagingDirectory)/ArtifactOutputs"
-
-        - task: 1ES.PublishPipelineArtifact@1
-          displayName: 'Publish Artifact(s)'
-          inputs:
-            path: '$(Build.ArtifactStagingDirectory)/ArtifactOutputs'
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            path: $(Build.ArtifactStagingDirectory)/ArtifactOutputs
+            artifact: drop
